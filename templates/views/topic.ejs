@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic - PrepVerse</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1070AE;
+            --primary-light: #439FC8;
+            --primary-dark: #05243B;
+            --secondary: #064471;
+            --light: #F3EDE1;
+            --dark: #05243B;
+            --darker: #041A2E;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-dark), var(--darker));
+            color: var(--light);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+        }
+
+       /* Navbar Styling */
+        .top-nav {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 0.8rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 40px;
+            margin-right: 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.6) !important;
+            text-decoration: none;
+            padding: 0.5rem 0;
+            position: relative;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .nav-link.active {
+            color: white !important;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-light);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+        }
+
+        .logout-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--primary-light);
+        }
+        /* Main Content */
+        .topic-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Header */
+        .topic-hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(6, 68, 113, 0.3), rgba(5, 36, 59, 0.6));
+            border-radius: 20px;
+            border: 1px solid rgba(67, 159, 200, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+
+        .topic-title {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--light), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .topic-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .progress-label {
+            font-weight: 600;
+            color: var(--primary-light);
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: linear-gradient(135deg, rgba(6, 68, 113, 0.4), rgba(5, 36, 59, 0.8));
+            border: 1px solid rgba(67, 159, 200, 0.3);
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-header {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--light);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            color: var(--primary-light);
+        }
+
+        .section-body {
+            padding: 2rem;
+        }
+
+        /* Video Link Styling */
+        .video-link-wrapper {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border: 2px dashed rgba(67, 159, 200, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .video-link-wrapper:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary-light);
+        }
+
+        .video-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 112, 174, 0.4);
+        }
+
+        .video-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 112, 174, 0.6);
+            color: white;
+        }
+
+        .video-link i {
+            font-size: 1.2rem;
+        }
+
+        .video-info {
+            margin-top: 1rem;
+        }
+
+        .video-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--light);
+            margin-bottom: 0.5rem;
+        }
+
+        .video-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+        }
+
+        /* Quiz Section */
+        .quiz-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-light);
+            transition: all 0.3s ease;
+        }
+
+        .quiz-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--light);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.2rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .option-item:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--primary-light);
+        }
+
+        .option-item input[type="radio"] {
+            margin-right: 1rem;
+            transform: scale(1.2);
+            accent-color: var(--primary-light);
+        }
+
+        .option-item label {
+            cursor: pointer;
+            color: var(--light);
+            font-weight: 400;
+            flex: 1;
+        }
+
+        .explanation {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation strong {
+            color: var(--success);
+        }
+
+        /* Buttons */
+        .btn-modern {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 112, 174, 0.4);
+            cursor: pointer;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 112, 174, 0.6);
+            color: white;
+        }
+
+        .btn-modern:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-outline-modern {
+            background: transparent;
+            border: 2px solid var(--primary-light);
+            color: var(--primary-light);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-modern:hover {
+            background: var(--primary-light);
+            color: var(--dark);
+            transform: translateY(-2px);
+        }
+
+        /* Navigation */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Score Display */
+        .score-display {
+            background: linear-gradient(135deg, var(--success), #20c997);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: none;
+            animation: slideDown 0.5s ease;
+        }
+
+        .score-display.show {
+            display: block;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .topic-container {
+                padding: 1rem;
+            }
+
+            .topic-title {
+                font-size: 2rem;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .navigation-buttons a,
+            .navigation-buttons button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modern Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="/sdashboard" class="logo">
+                <img src="/images/logo.png" alt="PrepVerse Logo">
+                PrepVerse
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/sdashboard" class="nav-link">Home</a></li>
+                <li><a href="/quant" class="nav-link active">Quant</a></li>
+                <li><a href="/reasoning" class="nav-link">Reasoning</a></li>
+                <li><a href="/verbal" class="nav-link">Verbal</a></li>
+            </ul>
+            <div class="user-actions">
+                <div class="user-profile">
+                    <img src="https://placehold.co/40x40/064471/F3EDE1?text=JD" alt="User Profile">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="topic-container fade-in">
+        <!-- Hero Header -->
+        <div class="topic-hero">
+            <h1 class="topic-title" id="topic-title">Loading...</h1>
+            <p class="topic-subtitle">Master this topic with interactive video lessons and practice tests</p>
+        </div>
+
+        <!-- Progress Section -->
+        <div class="progress-section">
+            <div class="progress-info">
+                <span class="progress-label">Learning Progress</span>
+                <span class="progress-percent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- Video Section -->
+        <div class="section-card">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-play-circle"></i>
+                    Learning Videos
+                </h2>
+            </div>
+            <div class="section-body">
+                <div id="videos">
+                    <div class="video-link-wrapper">
+                        <a href="#" class="video-link" id="videoLink" target="_blank">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span id="videoLinkText">Loading video link...</span>
+                        </a>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title" id="video-title">Video Tutorial</div>
+                        <div class="video-description">Click the link above to watch the tutorial video in a new tab</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="section-card">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-tasks"></i>
+                    Practice Test
+                </h2>
+            </div>
+            <div class="section-body">
+                <div id="quiz">
+                    <div class="text-center py-4">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading questions...</span>
+                        </div>
+                        <p class="mt-2">Loading practice questions...</p>
+                    </div>
+                </div>
+                <div class="score-display" id="scoreDisplay"></div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="navigation-buttons">
+            <a href="/quant" class="btn-outline-modern">
+                <i class="fas fa-arrow-left"></i>
+                Back to Topics
+            </a>
+            <button class="btn-modern" id="submitQuiz">
+                <i class="fas fa-paper-plane"></i>
+                Submit Answers
+            </button>
+            <a href="#" class="btn-modern" id="nextTopic" style="display: none;">
+                Next Topic
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced topic data with more questions
+        const topics = {
+            'number-system': {
+                name: 'Number System',
+                video: 'https://www.youtube.com/watch?v=wqKpV2edSdE',
+                questions: [
+                    {
+                        question: 'What is the smallest prime number?',
+                        options: ['0', '1', '2', '3'],
+                        answer: '2',
+                        explanation: '2 is the smallest and only even prime number. Prime numbers are numbers greater than 1 that have no positive divisors other than 1 and themselves.'
+                    },
+                    {
+                        question: 'Which of these is a composite number?',
+                        options: ['11', '13', '15', '17'],
+                        answer: '15',
+                        explanation: '15 is a composite number because it has factors other than 1 and itself (3 and 5). Composite numbers have more than two factors.'
+                    },
+                    {
+                        question: 'What is the sum of the first 5 prime numbers?',
+                        options: ['18', '28', '26', '30'],
+                        answer: '28',
+                        explanation: 'The first 5 prime numbers are 2, 3, 5, 7, 11. Their sum is 2 + 3 + 5 + 7 + 11 = 28.'
+                    }
+                ]
+            },
+            'percentages': {
+                name: 'Percentages', 
+                video: 'https://www.youtube.com/watch?v=7kHE1q-TVEc',
+                questions: [
+                    {
+                        question: 'If 20% of a number is 50, what is the number?',
+                        options: ['200', '250', '300', '350'],
+                        answer: '250',
+                        explanation: '20% of x = 50, so x = 50 ÷ 0.20 = 250. To find the whole number when you know a percentage, divide the part by the percentage (in decimal form).'
+                    },
+                    {
+                        question: 'What is 25% of 200?',
+                        options: ['25', '50', '75', '100'],
+                        answer: '50',
+                        explanation: '25% of 200 = 0.25 × 200 = 50. To find a percentage of a number, multiply the number by the percentage in decimal form.'
+                    }
+                ]
+            },
+            'number-series': {
+                name: 'Number Series',
+                video: 'https://www.youtube.com/watch?v=nCI-mtRhDPQ',
+                questions: [
+                    {
+                        question: 'What comes next: 2, 4, 6, 8, ?',
+                        options: ['9', '10', '12', '14'],
+                        answer: '10',
+                        explanation: 'This is a simple arithmetic sequence where each number increases by 2. 8 + 2 = 10.'
+                    }
+                ]
+            },
+            'seating-arrangement': {
+                name: 'Seating Arrangement',
+                video: 'https://www.youtube.com/watch?v=GYe98jwCn7g',
+                questions: [
+                    {
+                        question: 'In a linear arrangement, if A is to the left of B and B is to the left of C, who is in the middle?',
+                        options: ['A', 'B', 'C', 'Cannot determine'],
+                        answer: 'B',
+                        explanation: 'The arrangement is A, B, C from left to right. Therefore, B is in the middle.'
+                    }
+                ]
+            },
+            'reading-comprehension': {
+                name: 'Reading Comprehension',
+                video: 'https://www.youtube.com/watch?v=dPvWRYPadFg',
+                questions: [
+                    {
+                        question: 'What is the main purpose of reading comprehension exercises?',
+                        options: ['To improve reading speed', 'To understand and interpret text', 'To memorize content', 'To learn new vocabulary'],
+                        answer: 'To understand and interpret text',
+                        explanation: 'Reading comprehension focuses on understanding, interpreting, and analyzing written content.'
+                    }
+                ]
+            },
+            'para-jumbles': {
+                name: 'Para Jumbles',
+                video: 'https://www.youtube.com/watch?v=PgNBT_Zp_Us',
+                questions: [
+                    {
+                        question: 'What is the first step in solving para jumbles?',
+                        options: ['Look for transition words', 'Find the opening sentence', 'Identify the closing sentence', 'Read all sentences'],
+                        answer: 'Read all sentences',
+                        explanation: 'The first step is to read all sentences carefully to understand the overall theme and context.'
+                    }
+                ]
+            }
+        };
+
+        // Get topic from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const slug = urlParams.get('slug');
+
+        if (!slug) {
+            document.body.innerHTML = `
+                <div class="topic-container">
+                    <div class="alert alert-warning text-center" style="background: rgba(255,193,7,0.1); border: 1px solid rgba(255,193,7,0.3); color: #ffc107;">
+                        <h4><i class="fas fa-exclamation-triangle"></i> No Topic Selected</h4>
+                        <p>Please select a topic from the Quant section.</p>
+                        <a href="/quant" class="btn-modern mt-3">
+                            <i class="fas fa-arrow-left"></i> Back to Topics
+                        </a>
+                    </div>
+                </div>
+            `;
+        } else if (!topics[slug]) {
+            document.body.innerHTML = `
+                <div class="topic-container">
+                    <div class="alert alert-danger text-center" style="background: rgba(220,53,69,0.1); border: 1px solid rgba(220,53,69,0.3); color: #dc3545;">
+                        <h4><i class="fas fa-times-circle"></i> Topic Not Found</h4>
+                        <p>The topic "${slug}" was not found.</p>
+                        <a href="/quant" class="btn-modern mt-3">
+                            <i class="fas fa-arrow-left"></i> Back to Topics
+                        </a>
+                    </div>
+                </div>
+            `;
+        } else {
+            loadTopic(slug);
+        }
+
+        function loadTopic(slug) {
+            const topic = topics[slug];
+            
+            // Set title
+            document.getElementById('topic-title').textContent = topic.name;
+
+            // Load video link
+            const videoLink = document.getElementById('videoLink');
+            const videoLinkText = document.getElementById('videoLinkText');
+            const videoTitle = document.getElementById('video-title');
+            
+            videoLink.href = topic.video;
+            videoLinkText.textContent = `Watch ${topic.name} Tutorial Video`;
+            videoTitle.textContent = `${topic.name} Complete Tutorial`;
+
+            // Load quiz
+            const quizDiv = document.getElementById('quiz');
+            quizDiv.innerHTML = '';
+
+            topic.questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-item';
+                questionDiv.innerHTML = `
+                    <div class="question-text">Q${index + 1}: ${q.question}</div>
+                    <div class="options-grid">
+                        ${q.options.map(option => `
+                            <div class="option-item">
+                                <input type="radio" name="question${index}" value="${option}" id="q${index}-${option}">
+                                <label for="q${index}-${option}">${option}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation${index}">
+                        <strong>Explanation:</strong> ${q.explanation}
+                    </div>
+                `;
+                quizDiv.appendChild(questionDiv);
+            });
+
+            // Add event listener for submit button
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            const topic = topics[slug];
+            let score = 0;
+            const totalQuestions = topic.questions.length;
+
+            topic.questions.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                const explanation = document.getElementById(`explanation${index}`);
+                const options = document.querySelectorAll(`input[name="question${index}"]`);
+
+                // Show explanation
+                explanation.classList.add('show');
+
+                // Color code options
+                options.forEach(opt => {
+                    const optionItem = opt.parentElement;
+                    if (opt.value === q.answer) {
+                        optionItem.style.background = 'rgba(40, 167, 69, 0.2)';
+                        optionItem.style.borderColor = 'var(--success)';
+                    } else if (selectedOption && opt === selectedOption && opt.value !== q.answer) {
+                        optionItem.style.background = 'rgba(220, 53, 69, 0.2)';
+                        optionItem.style.borderColor = 'var(--danger)';
+                    }
+                });
+
+                if (selectedOption && selectedOption.value === q.answer) {
+                    score++;
+                }
+            });
+
+            // Update progress
+            const progress = Math.round((score / totalQuestions) * 100);
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.querySelector('.progress-percent').textContent = `${progress}%`;
+
+            // Show score
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            scoreDisplay.innerHTML = `
+                <i class="fas fa-trophy me-2"></i>
+                Your Score: ${score}/${totalQuestions} (${progress}%)
+                <br>
+                <small>${getPerformanceMessage(progress)}</small>
+            `;
+            scoreDisplay.classList.add('show');
+
+            // Disable submit button and show next topic button
+            document.getElementById('submitQuiz').disabled = true;
+            document.getElementById('nextTopic').style.display = 'inline-flex';
+
+            // Update next topic link
+            const topicOrder = ['number-system', 'percentages', 'number-series', 'seating-arrangement', 'reading-comprehension', 'para-jumbles'];
+            const currentIndex = topicOrder.indexOf(slug);
+            if (currentIndex < topicOrder.length - 1) {
+                document.getElementById('nextTopic').href = `/topic?slug=${topicOrder[currentIndex + 1]}`;
+            } else {
+                document.getElementById('nextTopic').href = '/quant';
+                document.getElementById('nextTopic').innerHTML = '<i class="fas fa-check"></i> Complete Course';
+            }
+        }
+
+        function getPerformanceMessage(score) {
+            if (score >= 90) return 'Excellent! You have mastered this topic.';
+            if (score >= 70) return 'Great job! You have a good understanding.';
+            if (score >= 50) return 'Good effort! Review the explanations to improve.';
+            return 'Keep practicing! Review the video and try again.';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrepVerse - Ride the Wave to Your Career</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --primary: #1070AE;
+      --primary-light: #439FC8;
+      --primary-dark: #05243B;
+      --secondary: #064471;
+      --light: #F3EDE1;
+      --dark: #05243B;
+      --darker: #041A2E;
+      --gray: #7e7e7e;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      --gradient-dark: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary) 100%);
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      --box-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.25);
+      --border-radius: 12px;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: var(--primary-dark);
+      color: var(--light);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Navbar Styling */
+    .top-nav {
+      background: var(--gradient-dark);
+      color: white;
+      padding: 0.8rem 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: white;
+      text-decoration: none;
+    }
+
+    .logo img {
+      width: 40px;
+      margin-right: 10px;
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.6) !important;
+      text-decoration: none;
+      padding: 0.5rem 0;
+      position: relative;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    .nav-link.active {
+      color: white !important;
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--primary-light);
+      border-radius: 3px 3px 0 0;
+    }
+
+    .main-content { 
+      padding: 2rem; 
+      margin-top: 90px; 
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+      background: var(--gradient-primary);
+      color: var(--light);
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 2rem;
+      box-shadow: var(--box-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0.3;
+    }
+
+    .welcome-section h3 {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+
+    .welcome-section .lead {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    /* Daily Motivation */
+    .motivation-card {
+      background: var(--gradient-primary);
+      color: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--box-shadow);
+      transition: transform 0.3s ease;
+      border-left: 4px solid var(--primary-light);
+    }
+
+    .motivation-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--box-shadow-hover);
+    }
+
+    /* Stats Cards */
+    .stats-card {
+      background: var(--darker);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      transition: all 0.3s ease;
+      height: 100%;
+      border-left: 4px solid var(--primary);
+      position: relative;
+    }
+
+    .stats-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--box-shadow-hover);
+    }
+
+    .stats-card h5 {
+      color: var(--primary-light);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .stats-card .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--light);
+    }
+
+    .stats-card .stat-label {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    /* Progress Rings */
+    .progress-ring {
+      width: 80px;
+      height: 80px;
+      position: relative;
+    }
+
+    .progress-ring-circle {
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+      background: var(--darker);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+      border-left: 4px solid var(--primary);
+    }
+
+    .quick-actions:hover {
+      box-shadow: var(--box-shadow-hover);
+    }
+
+    .action-btn {
+      background: rgba(16, 112, 174, 0.1);
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      color: var(--primary-light);
+      text-decoration: none;
+      display: block;
+      height: 100%;
+    }
+
+    .action-btn:hover {
+      background: var(--primary);
+      color: var(--light);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(16, 112, 174, 0.4);
+    }
+
+    .action-btn i {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    /* Alert Box */
+    .custom-alert {
+      background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
+      border: none;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(255, 193, 7, 0.15);
+      border-left: 4px solid var(--warning);
+      transition: all 0.3s ease;
+      color: var(--light);
+    }
+
+    .custom-alert:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 193, 7, 0.2);
+    }
+
+    .custom-alert .btn {
+      border-radius: 20px;
+      padding: 0.5rem 1.5rem;
+      font-weight: 500;
+    }
+
+    /* Chart Containers */
+    .chart-container {
+      background: var(--darker);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      border-left: 4px solid var(--primary);
+    }
+
+    .chart-container:hover {
+      box-shadow: var(--box-shadow-hover);
+    }
+
+    .chart-container h5 {
+      color: var(--light);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    /* Buttons */
+    .btn-primary-custom {
+      background: var(--gradient-primary);
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1.5rem;
+      font-weight: 500;
+      color: var(--light);
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(16, 112, 174, 0.4);
+    }
+
+    .btn-outline-primary {
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      background: transparent;
+      border-radius: 8px;
+      padding: 0.5rem 1.5rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline-primary:hover {
+      background: var(--primary);
+      color: var(--light);
+      transform: translateY(-2px);
+    }
+
+    /* Achievement Badges */
+    .badge-container {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .achievement-badge {
+      background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+      color: var(--dark);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .achievement-badge.silver {
+      background: linear-gradient(135deg, #C0C0C0 0%, #808080 100%);
+      color: var(--light);
+    }
+
+    .achievement-badge.bronze {
+      background: linear-gradient(135deg, #CD7F32 0%, #8B4513 100%);
+      color: var(--light);
+    }
+
+    /* Upcoming Goals Styling */
+    .goal-item {
+      transition: all 0.3s ease;
+    }
+
+    .goal-item:hover {
+      transform: translateY(-3px);
+    }
+
+    /* Animation for progress rings */
+    @keyframes progressAnimation {
+      from { stroke-dashoffset: 219.8; }
+    }
+
+    .progress-ring-circle {
+      animation: progressAnimation 1.5s ease-out forwards;
+    }
+
+    /* Text Colors */
+    .text-primary {
+      color: var(--primary-light) !important;
+    }
+
+    .text-muted {
+      color: var(--gray) !important;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 1rem;
+        margin-top: 80px;
+      }
+      
+      .welcome-section {
+        padding: 1.5rem;
+      }
+      
+      .chart-container {
+        margin-bottom: 1rem;
+      }
+      
+      .badge-container {
+        justify-content: center;
+      }
+      
+      .nav-menu {
+        gap: 1rem;
+      }
+    }
+
+    /* Additional enhancements */
+    .text-gradient {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-title {
+      position: relative;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      color: var(--light);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--gradient-primary);
+      border-radius: 3px;
+    }
+
+    /* Chart text colors */
+    .chartjs-render-monitor {
+      filter: brightness(0.9);
+    }
+  </style>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="top-nav">
+  <div class="nav-container">
+    <a href="#" class="logo">
+      <img src="images/logo.png" alt="PrepVerse Logo">
+      PrepVerse
+    </a>
+    <ul class="nav-menu" id="navMenu" style="margin-right: 150px;">
+      <li class="nav-item"><a href="/coding" class="nav-link"><i class="fas fa-user"></i> Home</a></li>
+      <li class="nav-item"><a href="/dsa" class="nav-link"><i class="fas fa-book"></i> DSA Topics</a></li>
+      <li class="nav-item"><a href="/sdashboard" class="nav-link "><i class="fas fa-home"></i> Dashboard</a></li>
+    </ul>
+    
+    <div class="user-actions" id="userActions">
+      <div class="user-profile">
+        <!-- User profile content would go here -->
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- 🔹 Main Content -->
+<div class="main-content">
+  <!-- Welcome Section -->
+  <div class="welcome-section">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h3><strong>Welcome back</strong>, Ready to code today? 🚀</h3>
+        <p class="lead">📋 "Consistency beats intensity. Keep going!"</p>
+        <small><i class="fas fa-fire me-1"></i> Current Streak: <strong id="currentStreak">0 days</strong></small>
+      </div>
+      <div class="d-none d-md-block">
+        <i class="fas fa-code fa-3x opacity-75"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Daily Motivation -->
+  <div class="motivation-card">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <h5><i class="fas fa-bullhorn me-2"></i>Daily Motivation</h5>
+        <p class="mb-0" id="dailyQuote">"The only way to do great work is to love what you do." - Steve Jobs</p>
+      </div>
+      <div class="col-md-4 text-end">
+        <i class="fas fa-quote-right fa-2x opacity-50"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <h5 class="mb-3 section-title"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+    <div class="row g-3">
+      <div class="col-md-3 col-6">
+        <a href="/dsa" class="action-btn">
+          <i class="fas fa-play-circle"></i>
+          Start Practice
+        </a>
+      </div>
+      <div class="col-md-3 col-6">
+        <a href="/dsa/arrays" class="action-btn">
+          <i class="fas fa-project-diagram"></i>
+          Arrays
+        </a>
+      </div>
+      <div class="col-md-3 col-6">
+        <a href="/dsa/arrays#problemLevels" class="action-btn">
+          <i class="fas fa-comments"></i>
+          Problems
+        </a>
+      </div>
+      <div class="col-md-3 col-6">
+        <a href="#progressChart" class="action-btn" onclick="scrollToProgress()">
+          <i class="fas fa-chart-line"></i>
+          View Progress
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="row g-4 mt-2">
+    <div class="col-md-6">
+      <div class="stats-card">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h5><i class="fas fa-clock me-2"></i>Practice Reminder</h5>
+            <p class="mb-2">You haven't practiced Arrays in 3 days.</p>
+            <a href="/dsa/arrays" class="btn btn-primary-custom">Jump in</a>
+          </div>
+          <div class="text-primary">
+            <i class="fas fa-brain fa-2x"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="stats-card">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h5><i class="fas fa-trophy me-2"></i>Your Progress</h5>
+            <div class="d-flex gap-4">
+              <div>
+                <div class="stat-value" id="totalSolved">0</div>
+                <div class="stat-label">Problems Solved</div>
+              </div>
+              <div>
+                <div class="stat-value" id="streak">0</div>
+                <div class="stat-label">Day Streak</div>
+              </div>
+              <div>
+                <div class="stat-value" id="rank">-</div>
+                <div class="stat-label">Rank</div>
+              </div>
+            </div>
+            <!-- Achievement Badges -->
+            <div class="badge-container" id="achievementBadges">
+              <!-- Badges will be added dynamically -->
+            </div>
+          </div>
+          <div class="text-primary">
+            <i class="fas fa-trophy fa-2x"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alert Box -->
+  <div id="alertStart" class="custom-alert mt-4" style="display:none;">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <i class="fas fa-seedling me-2"></i>
+        <strong>Just getting started?</strong> Try your first DSA problem today!
+      </div>
+      <a href="/dsa" class="btn btn-outline-primary">Start Now</a>
+    </div>
+  </div>
+
+  <!-- 🔹 CHARTS -->
+  <div class="row mt-5">
+    <div class="col-md-4">
+      <div class="chart-container">
+        <h5 class="section-title"><i class="fas fa-chart-pie me-2"></i>Total Progress</h5>
+        <canvas id="progressChart"></canvas>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="chart-container">
+        <h5 class="section-title"><i class="fas fa-chart-bar me-2"></i>Problems Solved</h5>
+        <canvas id="barChart"></canvas>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="chart-container">
+        <h5 class="section-title"><i class="fas fa-chart-line me-2"></i>Weekly Progress Tracker</h5>
+        <canvas id="weeklyChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upcoming Goals -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="stats-card">
+        <h5 class="section-title"><i class="fas fa-flag me-2"></i>Upcoming Goals</h5>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="d-flex align-items-center mb-3 goal-item">
+              <div class="progress-ring me-3">
+                <svg width="80" height="80">
+                  <circle class="progress-ring-circle" stroke="#1070AE" stroke-width="4" fill="transparent" r="35" cx="40" cy="40" 
+                          stroke-dasharray="219.8" stroke-dashoffset="219.8" />
+                  <text x="40" y="45" text-anchor="middle" fill="#1070AE" font-weight="bold" id="arrayProgressText">0%</text>
+                </svg>
+              </div>
+              <div>
+                <strong>Array Mastery</strong>
+                <div class="text-muted" id="arrayProgressLabel">Loading...</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="d-flex align-items-center mb-3 goal-item">
+              <div class="progress-ring me-3">
+                <svg width="80" height="80">
+                  <circle class="progress-ring-circle" stroke="#2c4763" stroke-width="4" fill="transparent" r="35" cx="40" cy="40" 
+                          stroke-dasharray="219.8" stroke-dashoffset="219.8" />
+                  <text x="40" y="45" text-anchor="middle" fill="#7e7e7e" font-weight="bold" id="linkedListProgressText">0%</text>
+                </svg>
+              </div>
+              <div>
+                <strong>Linked List</strong>
+                <div class="text-muted" id="linkedListProgressLabel">Coming Soon</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="d-flex align-items-center mb-3 goal-item">
+              <div class="progress-ring me-3">
+                <svg width="80" height="80">
+                  <circle class="progress-ring-circle" stroke="#2c4763" stroke-width="4" fill="transparent" r="35" cx="40" cy="40" 
+                          stroke-dasharray="219.8" stroke-dashoffset="219.8" />
+                  <text x="40" y="45" text-anchor="middle" fill="#7e7e7e" font-weight="bold" id="dpProgressText">0%</text>
+                </svg>
+              </div>
+              <div>
+                <strong>Dynamic Programming</strong>
+                <div class="text-muted" id="dpProgressLabel">Coming Soon</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Daily motivation quotes
+  const quotes = [
+    "The only way to do great work is to love what you do. - Steve Jobs",
+    "Code is like humor. When you have to explain it, it's bad. - Cory House",
+    "First, solve the problem. Then, write the code. - John Johnson",
+    "Experience is the name everyone gives to their mistakes. - Oscar Wilde",
+    "Programming isn't about what you know; it's about what you can figure out. - Chris Pine"
+  ];
+
+  // Function to scroll to progress chart
+  function scrollToProgress() {
+    document.getElementById('progressChart').scrollIntoView({ 
+      behavior: 'smooth' 
+    });
+  }
+
+  // Function to calculate streak based on consecutive days with solved problems
+  function calculateStreak(solvedDates) {
+    if (!solvedDates || solvedDates.length === 0) return 0;
+    
+    // Sort dates in descending order
+    const sortedDates = solvedDates.sort((a, b) => new Date(b) - new Date(a));
+    
+    let streak = 1;
+    let currentDate = new Date(sortedDates[0]);
+    
+    for (let i = 1; i < sortedDates.length; i++) {
+      const prevDate = new Date(sortedDates[i]);
+      const diffTime = currentDate - prevDate;
+      const diffDays = diffTime / (1000 * 60 * 60 * 24);
+      
+      if (diffDays === 1) {
+        streak++;
+        currentDate = prevDate;
+      } else {
+        break;
+      }
+    }
+    
+    return streak;
+  }
+
+  // Function to update progress rings
+  function updateProgressRings(arraySolved) {
+    const totalArrayProblems = 10; // Total array problems available
+    const arrayProgress = (arraySolved / totalArrayProblems) * 100;
+    
+    // Update array progress
+    const arrayProgressCircle = document.querySelector('.progress-ring-circle');
+    const arrayProgressText = document.getElementById('arrayProgressText');
+    const arrayProgressLabel = document.getElementById('arrayProgressLabel');
+    
+    if (arrayProgressCircle && arrayProgress > 0) {
+      const circumference = 2 * Math.PI * 35;
+      const offset = circumference - (arrayProgress / 100) * circumference;
+      arrayProgressCircle.style.strokeDashoffset = offset;
+      arrayProgressCircle.style.stroke = '#1070AE';
+    }
+    
+    if (arrayProgressText) {
+      arrayProgressText.textContent = `${Math.round(arrayProgress)}%`;
+    }
+    
+    if (arrayProgressLabel) {
+      arrayProgressLabel.textContent = `${arraySolved}/${totalArrayProblems} problems solved`;
+    }
+  }
+
+  async function loadDashboard() {
+    // Tumhara original API call - yahi rahega
+    const res = await fetch('/user/progress/poonam123');
+    const data = await res.json();
+
+    document.getElementById('totalSolved').innerText = data.totalSolved;
+    
+    // Streak calculation - tumhara original logic with consecutive days
+    const streak = calculateStreak(data.solvedDates || []);
+    document.getElementById('streak').innerText = streak;
+    document.getElementById('currentStreak').innerText = streak + ' days';
+    
+    if (data.totalSolved === 0) {
+      document.getElementById('alertStart').style.display = 'block';
+    }
+    
+    // Rank calculation - tumhara original logic
+    const rank = data.totalSolved >= 20 ? "Gold" : data.totalSolved >= 10 ? "Silver" : data.totalSolved >= 5 ? "Bronze" : "Unranked";
+    document.getElementById('rank').innerText = rank;
+
+    // Update array progress in upcoming goals
+    const arraySolved = data.solved?.Easy + data.solved?.Medium + data.solved?.Hard || 0;
+    updateProgressRings(arraySolved);
+
+    // Update upcoming goals with real data from database
+    updateUpcomingGoals(data.totalArrayProblems, arraySolved);
+
+    // Add achievement badges based on progress
+    updateAchievementBadges(data.totalSolved);
+    
+    // Function to update upcoming goals with real data
+    function updateUpcomingGoals(totalArrayProblems, arraySolved) {
+      const totalProblems = 30; // Total array problems (10 easy + 10 medium + 10 hard)
+      const progressPercentage = (arraySolved / totalProblems) * 100;
+      
+      // Update array progress ring
+      const arrayProgressCircle = document.querySelector('.progress-ring-circle');
+      const arrayProgressText = document.getElementById('arrayProgressText');
+      const arrayProgressLabel = document.getElementById('arrayProgressLabel');
+      
+      if (arrayProgressCircle && progressPercentage > 0) {
+        const circumference = 2 * Math.PI * 35;
+        const offset = circumference - (progressPercentage / 100) * circumference;
+        arrayProgressCircle.style.strokeDashoffset = offset;
+        arrayProgressCircle.style.stroke = '#1070AE';
+      }
+      
+      if (arrayProgressText) {
+        arrayProgressText.textContent = `${Math.round(progressPercentage)}%`;
+        arrayProgressText.setAttribute('fill', progressPercentage > 0 ? '#1070AE' : '#7e7e7e');
+      }
+      
+      if (arrayProgressLabel) {
+        arrayProgressLabel.textContent = `${arraySolved}/${totalProblems} problems solved`;
+        arrayProgressLabel.className = progressPercentage === 100 ? 'text-success' : 'text-muted';
+      }
+    }
+
+    // Set random daily quote
+    document.getElementById('dailyQuote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+    // 🔸 Pie chart (Total Progress) - Tumhara original chart code
+    new Chart(document.getElementById('progressChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Completed', 'Remaining'],
+        datasets: [{ 
+          data: [data.totalSolved, data.totalProblems - data.totalSolved], 
+          backgroundColor: ['#1070AE', '#2c4763'],
+          borderWidth: 0,
+          hoverOffset: 8
+        }]
+      },
+      options: { 
+        cutout: '70%',
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              padding: 20,
+              usePointStyle: true,
+              pointStyle: 'circle',
+              color: '#F3EDE1'
+            }
+          }
+        }
+      }
+    });
+
+    // 🔸 Bar chart (Solved Problems) - Tumhara original chart code
+    new Chart(document.getElementById('barChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Easy', 'Medium', 'Hard'],
+        datasets: [{ 
+          label: 'Solved', 
+          data: [data.solved.Easy, data.solved.Medium, data.solved.Hard], 
+          backgroundColor: ['#439FC8', '#1070AE', '#064471'],
+          borderRadius: 6,
+          borderSkipped: false
+        }]
+      },
+      options: { 
+        scales: { 
+          y: { 
+            beginAtZero: true,
+            grid: {
+              drawBorder: false,
+              color: '#2c4763'
+            },
+            ticks: {
+              color: '#F3EDE1'
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            },
+            ticks: {
+              color: '#F3EDE1'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+
+    // 🔸 Weekly Progress - Tumhara original chart code
+    const weeklyLabels = Object.keys(data.weekly);
+    const weeklyValues = Object.values(data.weekly);
+    new Chart(document.getElementById('weeklyChart'), {
+      type: 'line',
+      data: {
+        labels: weeklyLabels,
+        datasets: [{
+          label: 'Weekly Solved (Oct 2025)',
+          data: weeklyValues,
+          borderColor: '#1070AE',
+          backgroundColor: 'rgba(16,112,174,0.1)',
+          tension: 0.4,
+          fill: true,
+          pointBackgroundColor: '#1070AE',
+          pointBorderColor: '#ffffff',
+          pointBorderWidth: 2,
+          pointRadius: 5
+        }]
+      },
+      options: { 
+        scales: { 
+          y: { 
+            beginAtZero: true,
+            grid: {
+              drawBorder: false,
+              color: '#2c4763'
+            },
+            ticks: {
+              color: '#F3EDE1'
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            },
+            ticks: {
+              color: '#F3EDE1'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+  }
+
+  function updateAchievementBadges(totalSolved) {
+    const badgeContainer = document.getElementById('achievementBadges');
+    badgeContainer.innerHTML = '';
+
+    if (totalSolved >= 5) {
+      badgeContainer.innerHTML += '<span class="achievement-badge bronze"><i class="fas fa-medal me-1"></i>Bronze Coder</span>';
+    }
+    if (totalSolved >= 10) {
+      badgeContainer.innerHTML += '<span class="achievement-badge silver"><i class="fas fa-medal me-1"></i>Silver Coder</span>';
+    }
+    if (totalSolved >= 20) {
+      badgeContainer.innerHTML += '<span class="achievement-badge"><i class="fas fa-medal me-1"></i>Gold Coder</span>';
+    }
+    if (totalSolved >= 1) {
+      badgeContainer.innerHTML += '<span class="achievement-badge" style="background: linear-gradient(135deg, #1070AE 0%, #439FC8 100%); color: white;"><i class="fas fa-star me-1"></i>First Step</span>';
+    }
+  }
+
+  loadDashboard();
+</script>
+</body>
+</html>

@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Us | PrepVerse</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #1070AE;
+      --primary-light: #439FC8;
+      --primary-dark: #05243B;
+      --secondary: #064471;
+      --light: #F3EDE1;
+      --dark: #05243B;
+      --darker: #041A2E;
+      --gray: #7e7e7e;
+    }
+
+    /* Custom Dark Background with subtle grid lines */
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--dark);
+      color: var(--light);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 700;
+      color: var(--primary-light);
+    }
+
+    p {
+      color: var(--light);
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    /* Navbar */
+    .navbar-custom {
+      background-color: transparent;
+      padding: 1.5rem 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .navbar-custom.scrolled {
+      background-color: rgba(4, 26, 46, 0.95);
+      padding: 0.8rem 0;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .navbar-brand,
+    .nav-link {
+      color: var(--light);
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.5px;
+    }
+
+    .navbar-brand svg {
+      fill: var(--primary-light);
+      margin-right: 0.75rem;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-brand:hover svg {
+      transform: rotate(15deg);
+    }
+
+    .nav-link {
+      margin: 0 0.75rem;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary-light);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--primary-light);
+    }
+
+    /* Buttons */
+    .btn-primary-custom {
+      background-color: var(--primary);
+      color: var(--light);
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 0.75rem 1.75rem;
+      border: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 15px rgba(16, 112, 174, 0.3);
+      letter-spacing: 0.5px;
+    }
+
+    .btn-primary-custom:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(16, 112, 174, 0.4);
+    }
+
+    .btn-outline-custom {
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 0.75rem 1.75rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background-color: transparent;
+    }
+
+    .btn-outline-custom:hover {
+      background-color: var(--primary);
+      color: var(--light);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(16, 112, 174, 0.4);
+    }
+
+    /* About Hero Section */
+    .about-hero-section {
+      background: radial-gradient(ellipse at bottom, var(--darker) 0%, var(--dark) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-hero-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(0deg, transparent 24px, var(--secondary) 25px),
+        linear-gradient(90deg, transparent 24px, var(--secondary) 25px);
+      background-size: 25px 25px;
+      opacity: 0.1;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .about-illustration img {
+      max-width: 100%;
+      height: auto;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* About Content Sections */
+    .about-content-section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-content-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(16, 112, 174, 0.05) 0%, transparent 20%),
+        radial-gradient(circle at 80% 70%, rgba(16, 112, 174, 0.05) 0%, transparent 20%);
+      pointer-events: none;
+    }
+/* Team Section Styles */
+.team-card {
+    transition: all 0.3s ease;
+    height: 100%;
+    border-radius: 12px;
+    background: rgba(6, 68, 113, 0.2);
+    border: 1px solid rgba(16, 112, 174, 0.1);
+    padding: 1.5rem;
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(16, 112, 174, 0.2);
+    border-color: rgba(16, 112, 174, 0.3);
+}
+
+.team-img-container {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--primary-light);
+    margin-bottom: 1.5rem;
+}
+
+.team-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.btn-outline-custom.btn-sm {
+    padding: 0.35rem 1.25rem;
+    font-size: 0.85rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .team-img-container {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+    .team-img-container {
+        width: 130px;
+        height: 130px;
+    }
+    
+    .team-card {
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .team-img-container {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+    .social-links a {
+      color: var(--light);
+      font-size: 1.5rem;
+      margin: 0 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--primary-light);
+      transform: translateY(-5px);
+    }
+
+    /* Mission Timeline */
+    .mission-timeline {
+      position: relative;
+      padding-left: 30px;
+    }
+
+    .mission-timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 0;
+      height: 100%;
+      width: 2px;
+      background: var(--primary-light);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .timeline-date {
+      position: absolute;
+      left: -30px;
+      top: 0;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      z-index: 1;
+    }
+
+    .timeline-content {
+      background: rgba(6, 68, 113, 0.3);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-left: 40px;
+      border: 1px solid rgba(16, 112, 174, 0.1);
+    }
+
+    /* Value Cards */
+    .value-card {
+      background: rgba(6, 68, 113, 0.3);
+      border-radius: 16px;
+      border: 1px solid rgba(16, 112, 174, 0.1);
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .value-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(16, 112, 174, 0.15);
+      border-color: rgba(16, 112, 174, 0.4);
+    }
+
+    .value-icon {
+      font-size: 2.5rem;
+      color: var(--primary-light);
+      transition: all 0.3s ease;
+    }
+
+    .value-card:hover .value-icon {
+      color: var(--light);
+      transform: scale(1.2);
+    }
+
+    /* Testimonial Cards */
+    .testimonial-card {
+      background: rgba(6, 68, 113, 0.3);
+      border-radius: 16px;
+      border: 1px solid rgba(16, 112, 174, 0.1);
+    }
+
+    .testimonial-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--primary-light);
+    }
+
+    .testimonial-text {
+      font-style: italic;
+      position: relative;
+    }
+
+    .testimonial-text::before,
+    .testimonial-text::after {
+      content: '"';
+      font-size: 2rem;
+      color: var(--primary-light);
+      opacity: 0.5;
+    }
+
+    /* Stats */
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--primary-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    /* Footer Styles */
+    .footer-section {
+      background-color: var(--darker);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(16, 112, 174, 0.05) 0%, transparent 20%),
+        radial-gradient(circle at 80% 70%, rgba(16, 112, 174, 0.05) 0%, transparent 20%);
+      pointer-events: none;
+    }
+
+    .footer-logo img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .text-muted {
+      color: var(--gray) !important;
+      opacity: 0.8;
+    }
+
+    .hover-primary {
+      transition: all 0.3s ease;
+    }
+
+    .hover-primary:hover {
+      color: var(--primary-light) !important;
+      padding-left: 5px;
+    }
+
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background-color: rgba(67, 159, 200, 0.1);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      background-color: var(--primary-light);
+      color: var(--dark) !important;
+      transform: translateY(-3px);
+    }
+
+    .bg-darker {
+      background-color: var(--darker) !important;
+    }
+
+    .border-secondary {
+      border-color: var(--secondary) !important;
+    }
+
+    /* Nav Logo */
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 12px;
+      cursor: pointer;
+      width: fit-content;
+    }
+
+    .logo-image {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    .logo-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: #05243B;
+    }
+
+    /* Animation Keyframes */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        opacity: 0.9;
+        filter: drop-shadow(0 0 10px var(--primary));
+      }
+      100% {
+        opacity: 1;
+        filter: drop-shadow(0 0 20px var(--primary));
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .header-content h1 {
+        font-size: 2.8rem;
+      }
+      
+      .brain-illustration {
+        max-width: 320px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-section {
+        min-height: 700px;
+      }
+      
+      .header-content h1 {
+        font-size: 2.2rem;
+      }
+      
+      .section-title h2 {
+        font-size: 2rem;
+      }
+      
+      .feature-card {
+        padding: 2rem;
+      }
+      
+      .search-bar {
+        max-width: 90%;
+      }
+
+      .timeline-content {
+        margin-left: 30px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .header-content h1 {
+        font-size: 1.8rem;
+      }
+      
+      .navbar-brand {
+        font-size: 1.2rem;
+      }
+      
+      .feature-card {
+        padding: 1.5rem;
+      }
+
+      .mission-timeline {
+        padding-left: 20px;
+      }
+
+      .timeline-date {
+        width: 40px;
+        height: 40px;
+        left: -20px;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Spinner -->
+  <div class="spinner-container">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+ <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <div class="nav-logo">
+          <img src="images/logo.png" alt="PrepVerse Logo" class="logo-image">PrepVerse
+        </div>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+        aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-center" id="navMenu">
+        <ul class="navbar-nav mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link " href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Aptitude</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Programming</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Interviews</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link active" href="/about">About</a>
+          </li>
+        </ul>
+      </div>
+     <div class="d-flex align-items-center">
+        <a href="/login" class="btn btn-outline-custom me-3">Log in</a>
+        <a href="/register" class="btn btn-primary-custom">Sign up</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- About Hero Section -->
+  <section class="about-hero-section py-5">
+    <div class="container py-5">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <h1 class="display-4 fw-bold mb-4">Our Story</h1>
+          <p class="lead mb-4">We're a passionate team of developers, educators, and placement experts dedicated to revolutionizing placement preparation.</p>
+          <div class="d-flex flex-wrap gap-3">
+            <button class="btn btn-primary-custom active" id="meetTeamBtn">Meet Our Team</button>
+            <button class="btn btn-outline-custom" id="ourMissionBtn">Our Mission</button>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="about-illustration">
+            <img src="https://cdn-icons-png.flaticon.com/512/3079/3079165.png" alt="Team illustration" class="img-fluid">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- Team Section -->
+<section class="about-content-section py-4" id="teamSection">
+    <div class="container">
+        <h2 class="text-center mb-4">Our Team</h2>
+        <div class="row g-4 justify-content-center">
+            <!-- Team Member 1 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="team-card text-center p-3">
+                    <div class="team-img-container mx-auto mb-3">
+                        <img src="images/mem1.png" alt="Sarah Johnson" class="team-img rounded-circle">
+                    </div>
+                    <h4 class="mb-1">Sarah Johnson</h4>
+                    <p class="text-muted mb-3">Founder & CEO</p>
+                    <button class="btn btn-outline-custom btn-sm" data-bs-toggle="modal" data-bs-target="#profileModal" data-member="1">View Profile</button>
+                </div>
+            </div>
+            
+            <!-- Team Member 2 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="team-card text-center p-3">
+                    <div class="team-img-container mx-auto mb-3">
+                        <img src="images/mem2.png" alt="Michael Chen" class="team-img rounded-circle">
+                    </div>
+                    <h4 class="mb-1">Michael Chen</h4>
+                    <p class="text-muted mb-3">CTO & Lead Developer</p>
+                    <button class="btn btn-outline-custom btn-sm" data-bs-toggle="modal" data-bs-target="#profileModal" data-member="2">View Profile</button>
+                </div>
+            </div>
+            
+            <!-- Team Member 3 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="team-card text-center p-3">
+                    <div class="team-img-container mx-auto mb-3">
+                        <img src="images/mem3.png" alt="Priya Patel" class="team-img rounded-circle">
+                    </div>
+                    <h4 class="mb-1">Priya Patel</h4>
+                    <p class="text-muted mb-3">Content Director</p>
+                    <button class="btn btn-outline-custom btn-sm" data-bs-toggle="modal" data-bs-target="#profileModal" data-member="3">View Profile</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+  <!-- Values Section -->
+  <section class="about-content-section py-5">
+    <div class="container py-5">
+      <h2 class="text-center mb-5">Our Core Values</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="value-card text-center p-4">
+            <div class="value-icon mb-3">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h4>Empowerment</h4>
+            <p>We empower students with knowledge and confidence to ace their placements</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="value-card text-center p-4">
+            <div class="value-icon mb-3">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <h4>Innovation</h4>
+            <p>Constantly innovating to provide the best learning experience</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="value-card text-center p-4">
+            <div class="value-icon mb-3">
+              <i class="fas fa-heart"></i>
+            </div>
+            <h4>Community</h4>
+            <p>Building a supportive community of learners and mentors</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="about-content-section py-5 bg-darker">
+    <div class="container py-5">
+      <h2 class="text-center mb-5">What Students Say</h2>
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="testimonial-card text-center p-4">
+                  <img src="https://randomuser.me/api/portraits/women/22.jpg" class="testimonial-img mb-3" alt="Student">
+                  <p class="testimonial-text mb-3">"PrepVerse helped me crack my Amazon interview with their company-specific preparation materials. The coding problems were exactly what I needed!"</p>
+                  <h5>Riya Sharma</h5>
+                  <p class="text-muted">Placed at Amazon</p>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="testimonial-card text-center p-4">
+                  <img src="https://randomuser.me/api/portraits/men/41.jpg" class="testimonial-img mb-3" alt="Student">
+                  <p class="testimonial-text mb-3">"The aptitude practice tests were incredibly helpful. I improved my score by 40% in just two months of using PrepVerse."</p>
+                  <h5>Aditya Verma</h5>
+                  <p class="text-muted">Placed at TCS</p>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="testimonial-card text-center p-4">
+                  <img src="https://randomuser.me/api/portraits/women/65.jpg" class="testimonial-img mb-3" alt="Student">
+                  <p class="testimonial-text mb-3">"The interview preparation resources gave me the confidence to perform well in my final rounds. Got offers from 3 companies!"</p>
+                  <h5>Neha Gupta</h5>
+                  <p class="text-muted">Placed at Infosys</p>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Profile Modal -->
+  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark">
+        <div class="modal-header border-secondary">
+          <h5 class="modal-title" id="profileModalLabel">Team Member Profile</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="profile-content" id="profileContent">
+            <!-- Content will be loaded dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer-section py-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4 mb-4 mb-lg-0">
+          <div class="footer-logo d-flex align-items-center mb-3">
+            <img src="logo.png" alt="PrepVerse Logo" class="logo-image me-2">
+            <h3 class="text-primary-light mb-0">PrepVerse</h3>
+          </div>
+          <p class="text-muted">Your placement journey simplified with confidence. Master aptitude tests, coding challenges, and interview techniques with our comprehensive preparation platform.</p>
+          <div class="social-icons mt-4">
+            <a href="#" class="text-primary-light me-3"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-primary-light me-3"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-primary-light me-3"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="text-primary-light"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-md-4 col-lg-2 mb-4 mb-md-0">
+          <h5 class="text-primary-light mb-4">Quick Links</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Home</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Aptitude</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Programming</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Companies</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Resources</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-md-4 col-lg-2 mb-4 mb-md-0">
+          <h5 class="text-primary-light mb-4">Resources</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Blog</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">FAQs</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Help Center</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Tutorials</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Contact Us</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-md-4 col-lg-4">
+          <h5 class="text-primary-light mb-4">Newsletter</h5>
+          <p class="text-muted">Subscribe to our newsletter for the latest updates and resources.</p>
+          <form class="mt-4">
+            <div class="input-group mb-3">
+              <input type="email" class="form-control bg-darker border-secondary" placeholder="Your Email" aria-label="Your Email">
+              <button class="btn btn-primary-custom" type="submit">Subscribe</button>
+            </div>
+          </form>
+          <p class="small text-muted mt-3">We'll never share your email with anyone else.</p>
+        </div>
+      </div>
+      
+      <hr class="my-4 border-secondary">
+      
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start">
+          <p class="small text-muted mb-0">© <script>document.write(new Date().getFullYear())</script> PrepVerse. All rights reserved.</p>
+        </div>
+        <div class="col-md-6 text-center text-md-end">
+          <ul class="list-inline small mb-0">
+            <li class="list-inline-item"><a href="#" class="text-muted text-decoration-none hover-primary">Privacy Policy</a></li>
+            <li class="list-inline-item mx-2">·</li>
+            <li class="list-inline-item"><a href="#" class="text-muted text-decoration-none hover-primary">Terms of Service</a></li>
+            <li class="list-inline-item mx-2">·</li>
+            <li class="list-inline-item"><a href="#" class="text-muted text-decoration-none hover-primary">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Add this JavaScript for interactive elements -->
+  <script>
+    // Team data
+    const teamMembers = {
+      1: {
+        name: "Sarah Johnson",
+        role: "Founder & CEO",
+        bio: "Sarah founded PrepVerse with a vision to bridge the gap between academia and industry requirements. With 10+ years in the ed-tech space, she's passionate about making quality placement preparation accessible to all.",
+        skills: ["Education Technology", "Business Strategy", "Leadership"],
+        quote: "Every student deserves equal opportunity to succeed in their career journey.",
+        img: "mem1.png"
+      },
+      2: {
+        name: "Michael Chen",
+        role: "CTO & Lead Developer",
+        bio: "Michael leads our technical team with expertise in full-stack development and learning platforms. He's committed to building intuitive, powerful tools for students.",
+        skills: ["Full-stack Development", "System Architecture", "Machine Learning"],
+        quote: "Great technology should empower, not intimidate.",
+        img: "mem2.png"
+      },
+      3: {
+        name: "Priya Patel",
+        role: "Content Director",
+        bio: "Priya oversees our content strategy and ensures all materials are up-to-date with the latest industry trends and requirements.",
+        skills: ["Curriculum Design", "Technical Writing", "Interview Preparation"],
+        quote: "The right guidance at the right time can change a career trajectory.",
+        img: "mem3.png"
+      }
+    };
+
+    // Interactive buttons
+    document.getElementById('meetTeamBtn').addEventListener('click', function() {
+      document.getElementById('teamSection').style.display = 'block';
+      document.getElementById('missionSection').style.display = 'none';
+      this.classList.add('active');
+      document.getElementById('ourMissionBtn').classList.remove('active');
+      this.classList.remove('btn-outline-custom');
+      this.classList.add('btn-primary-custom');
+      document.getElementById('ourMissionBtn').classList.remove('btn-primary-custom');
+      document.getElementById('ourMissionBtn').classList.add('btn-outline-custom');
+    });
+
+    document.getElementById('ourMissionBtn').addEventListener('click', function() {
+      document.getElementById('teamSection').style.display = 'none';
+      document.getElementById('missionSection').style.display = 'block';
+      this.classList.add('active');
+      document.getElementById('meetTeamBtn').classList.remove('active');
+      this.classList.remove('btn-outline-custom');
+      this.classList.add('btn-primary-custom');
+      document.getElementById('meetTeamBtn').classList.remove('btn-primary-custom');
+      document.getElementById('meetTeamBtn').classList.add('btn-outline-custom');
+      
+      // Trigger stats animation when mission section is shown
+      animateStats();
+    });
+
+    // Team profile modal
+    const profileModal = document.getElementById('profileModal');
+    if (profileModal) {
+      profileModal.addEventListener('show.bs.modal', function(event) {
+        const button = event.relatedTarget;
+        const memberId = button.getAttribute('data-member');
+        const member = teamMembers[memberId];
+        
+        const profileContent = `
+          <div class="row">
+            <div class="col-md-4 text-center mb-4 mb-md-0">
+              <img src="${member.img}" class="img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+              <h4 class="mt-3 text-primary-light">${member.name}</h4>
+              <p class="text-primary">${member.role}</p>
+            </div>
+            <div class="col-md-8">
+              <p>${member.bio}</p>
+              <div class="mb-3">
+                <h6 class="text-primary-light">Skills</h6>
+                <div class="d-flex flex-wrap gap-2">
+                  ${member.skills.map(skill => `<span class="badge bg-primary text-dark">${skill}</span>`).join('')}
+                </div>
+              </div>
+              <blockquote class="blockquote mt-4">
+                <p class="mb-0 text-muted">"${member.quote}"</p>
+              </blockquote>
+            </div>
+          </div>
+        `;
+        
+        document.getElementById('profileContent').innerHTML = profileContent;
+      });
+    }
+
+    // Animate stats
+    function animateStats() {
+      const statElements = document.querySelectorAll('.stat-number');
+      
+      statElements.forEach(element => {
+        const target = parseInt(element.getAttribute('data-count'));
+        const duration = 2000; // Animation duration in ms
+        const step = target / (duration / 16); // 60fps
+        
+        let current = 0;
+        const increment = () => {
+          current += step;
+          if (current < target) {
+            element.textContent = Math.floor(current);
+            requestAnimationFrame(increment);
+          } else {
+            element.textContent = target;
+          }
+        };
+        
+        increment();
+      });
+    }
+
+    // Initialize when mission section is shown
+    const missionSection = document.getElementById('missionSection');
+    if (missionSection) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateStats();
+          }
+        });
+      }, {threshold: 0.1});
+
+      observer.observe(missionSection);
+    }
+
+    // Initialize tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  </script>
+</body>
+</html>

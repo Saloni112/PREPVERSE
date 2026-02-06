@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DSA Topics | PrepVerse</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1070AE;
+      --primary-light: #439FC8;
+      --primary-dark: #05243B;
+      --secondary: #064471;
+      --light: #F3EDE1;
+      --dark: #05243B;
+      --darker: #041A2E;
+      --gray: #7e7e7e;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      --gradient-dark: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary) 100%);
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      --box-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.25);
+      --border-radius: 12px;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: var(--primary-dark);
+      margin: 0;
+      color: var(--light);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Navbar Styling */
+    .top-nav {
+      background: var(--gradient-dark);
+      color: white;
+      padding: 0.8rem 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: white;
+      text-decoration: none;
+    }
+
+    .logo img {
+      width: 40px;
+      margin-right: 10px;
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.6) !important;
+      text-decoration: none;
+      padding: 0.5rem 0;
+      position: relative;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    .nav-link.active {
+      color: white !important;
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--primary-light);
+      border-radius: 3px 3px 0 0;
+    }
+    .main-content { 
+      padding: 2rem; 
+      margin-top: 90px; 
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+      background: var(--gradient-primary);
+      color: var(--light);
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 2rem;
+      box-shadow: var(--box-shadow);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .welcome-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0.3;
+    }
+
+    .welcome-section h3 {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+
+    .welcome-section .lead {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    /* Stats Cards */
+    .stats-card {
+      background: var(--darker);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      transition: all 0.3s ease;
+      height: 100%;
+      border-left: 4px solid var(--primary);
+      position: relative;
+      color: var(--light);
+    }
+
+    .stats-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--box-shadow-hover);
+    }
+
+    .stats-card h5 {
+      color: var(--primary-light);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .stats-card .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--light);
+    }
+
+    .stats-card .stat-label {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    /* Topic Cards */
+    .topic-card {
+      background: var(--darker);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      transition: all 0.3s ease;
+      border-left: 4px solid var(--primary);
+      margin-bottom: 1rem;
+      position: relative;
+      color: var(--light);
+    }
+
+    .topic-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--box-shadow-hover);
+    }
+
+    .topic-card.locked {
+      opacity: 0.7;
+      border-left: 4px solid var(--gray);
+    }
+
+    .topic-card.locked:hover {
+      transform: none;
+      cursor: not-allowed;
+    }
+
+    .topic-title {
+      color: var(--light);
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .topic-title:hover {
+      color: var(--primary-light);
+    }
+
+    .topic-title i {
+      color: var(--primary-light);
+    }
+
+    .topic-card.locked .topic-title {
+      color: var(--gray);
+      cursor: not-allowed;
+    }
+
+    .topic-card.locked .topic-title i {
+      color: var(--gray);
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+
+    .progress-tag {
+      background: rgba(16, 112, 174, 0.2);
+      color: var(--primary-light);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid var(--primary);
+    }
+
+    .topic-card.locked .progress-tag {
+      background: rgba(126, 126, 126, 0.2);
+      color: var(--gray);
+      border: 1px solid var(--gray);
+    }
+
+    .progress-bar-container {
+      background: #2c4763;
+      border-radius: 10px;
+      height: 8px;
+      margin-top: 0.5rem;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background: var(--gradient-primary);
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+
+    .topic-card.locked .progress-bar {
+      background: var(--gray);
+    }
+
+    /* Alert Box */
+    .custom-alert {
+      background: rgba(255, 193, 7, 0.1);
+      border: none;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(255, 193, 7, 0.15);
+      border-left: 4px solid var(--warning);
+      margin-top: 2rem;
+      color: var(--light);
+    }
+
+    /* Buttons */
+    .btn-primary-custom {
+      background: var(--gradient-primary);
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1.5rem;
+      font-weight: 500;
+      color: var(--light);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(16, 112, 174, 0.4);
+      color: var(--light);
+    }
+
+    .btn-sm {
+      padding: 0.4rem 1rem;
+      font-size: 0.875rem;
+    }
+
+    /* Streak Animation */
+    .streak-fire {
+      color: #ff6b35;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* Rank Badges */
+    .rank-badge {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
+    }
+
+    .rank-newbie { background: #6c757d; color: white; }
+    .rank-beginner { background: #28a745; color: white; }
+    .rank-advanced { background: #17a2b8; color: white; }
+    .rank-intermediate { background: #007bff; color: white; }
+    .rank-expert { background: #6f42c1; color: white; }
+    .rank-master { background: #e83e8c; color: white; }
+    .rank-pro { background: #fd7e14; color: white; }
+    .rank-grandmaster { background: #dc3545; color: white; }
+
+    /* Footer */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      padding: 1.5rem 0;
+      border-top: 1px solid #2c4763;
+      margin-top: 2rem;
+      color: var(--gray);
+      font-size: 0.875rem;
+    }
+
+    .footer-links { 
+      display: flex; 
+      gap: 1.5rem; 
+    }
+
+    .footer-link {
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover { 
+      color: var(--primary-light); 
+    }
+
+    /* Text Colors */
+    .text-muted {
+      color: var(--gray) !important;
+    }
+
+    .text-warning {
+      color: var(--warning) !important;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 1rem;
+        margin-top: 80px;
+      }
+      
+      .welcome-section {
+        padding: 1.5rem;
+      }
+      
+      .footer {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+      
+      .footer-links {
+        justify-content: center;
+      }
+      
+      .progress-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+<nav class="top-nav">
+  <div class="nav-container">
+    <a href="#" class="logo">
+      <img src="images/logo.png" alt="PrepVerse Logo">
+      PrepVerse
+    </a>
+    <ul class="nav-menu" id="navMenu" style="margin-right: 150px;">
+      <li class="nav-item"><a href="/sdashboard" class="nav-link"><i class="fas fa-user"></i> Home</a></li>
+      <li class="nav-item"><a href="/dsa" class="nav-link active"><i class="fas fa-book"></i> DSA Topics</a></li>
+      <li class="nav-item"><a href="/coding" class="nav-link "><i class="fas fa-home"></i> Dashboard</a></li>
+    </ul>
+    
+    <div class="user-actions" id="userActions">
+      <div class="user-profile">
+        <!-- User profile content would go here -->
+      </div>
+    </div>
+  </div>
+</nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h3><strong>Welcome back</strong>! <span id="userName">User</span>Ready to master DSA?</h3>
+          <p class="lead">Master Data Structures and Algorithms to ace your technical interviews</p>
+        </div>
+        <div class="d-none d-md-block">
+          <i class="fas fa-laptop-code fa-3x opacity-75"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <!-- <div class="row g-4 mb-4">
+      <div class="col-md-3">
+        <div class="stats-card">
+          <div class="text-center">
+            <div class="stat-value" id="problemsSolved">0</div>
+            <div class="stat-label">Problems Solved</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stats-card">
+          <div class="text-center">
+            <div class="stat-value" id="currentStreak">0 <i class="fas fa-fire streak-fire"></i></div>
+            <div class="stat-label">Day Streak</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stats-card">
+          <div class="text-center">
+            <div class="stat-value" id="topicsUnlocked">0</div>
+            <div class="stat-label">Topics Unlocked</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stats-card">
+          <div class="text-center">
+            <div class="stat-value" id="userRank">-</div>
+            <div class="stat-label">Current Rank</div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- Topics Section -->
+    <div class="stats-card">
+      <h5><i class="fas fa-folder-open me-2"></i>Your Topics</h5>
+      
+      <!-- Arrays -->
+      <div class="topic-card">
+        <a href="/dsa/arrays" class="topic-title text-decoration-none">
+          <i class="fas fa-table"></i>
+          Arrays
+        </a>
+        <div class="progress-info">
+          <a href="/dsa/arrays" class="btn-primary-custom btn-sm">Continue</a>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="arrayProgressBar" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Linked List -->
+      <div class="topic-card locked" id="linkedListCard">
+        <div class="topic-title">
+          <i class="fas fa-link"></i>
+          Linked List
+        </div>
+        <div class="progress-info">
+          <span class="text-muted">Locked</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="linkedListProgressBar" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Stacks -->
+      <div class="topic-card locked" id="stacksCard">
+        <div class="topic-title">
+          <i class="fas fa-layer-group"></i>
+          Stacks
+        </div>
+        <div class="progress-info">
+          <span class="text-muted">Locked</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="stacksProgressBar" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Queues -->
+      <div class="topic-card locked" id="queuesCard">
+        <div class="topic-title">
+          <i class="fas fa-stream"></i>
+          Queues
+        </div>
+        <div class="progress-info">
+          <span class="text-muted">Locked</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="queuesProgressBar" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Trees -->
+      <div class="topic-card locked" id="treesCard">
+        <div class="topic-title">
+          <i class="fas fa-project-diagram"></i>
+          Trees
+        </div>
+        <div class="progress-info">
+          <span class="text-muted">Locked</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="treesProgressBar" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Alert -->
+      <div class="custom-alert">
+        <div class="d-flex align-items-center">
+          <i class="fas fa-info-circle me-3 text-warning"></i>
+          <div>
+            <strong>Unlock more topics by completing earlier ones</strong>
+            <div class="text-muted">Complete Arrays to unlock Linked List and continue your DSA journey</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div>© 2025 PrepVerse. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="#" class="footer-link">About</a>
+        <a href="#" class="footer-link">Contact</a>
+        <a href="#" class="footer-link">Help</a>
+        <a href="#" class="footer-link">Terms</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Rank system configuration
+    const RANK_SYSTEM = {
+      NEWBIE: { min: 0, max: 4, name: "Newbie", class: "rank-newbie" },
+      BEGINNER: { min: 5, max: 14, name: "Beginner", class: "rank-beginner" },
+      ADVANCED_BEGINNER: { min: 15, max: 29, name: "Advanced Beginner", class: "rank-advanced" },
+      INTERMEDIATE: { min: 30, max: 49, name: "Intermediate", class: "rank-intermediate" },
+      EXPERT: { min: 50, max: 99, name: "Expert", class: "rank-expert" },
+      MASTER: { min: 100, max: 199, name: "Master", class: "rank-master" },
+      PRO: { min: 200, max: 499, name: "Pro", class: "rank-pro" },
+      GRANDMASTER: { min: 500, max: Infinity, name: "Grandmaster", class: "rank-grandmaster" }
+    };
+
+    // Topic unlock requirements
+    const TOPIC_UNLOCK_REQUIREMENTS = {
+      LINKED_LIST: 15, // Solve 15 array problems to unlock Linked List
+      STACKS: 30,      // Solve 30 problems total to unlock Stacks
+      QUEUES: 45,      // Solve 45 problems total to unlock Queues
+      TREES: 60        // Solve 60 problems total to unlock Trees
+    };
+
+    // Function to calculate streak based on consecutive days
+    function calculateStreak(solvedDates) {
+      if (!solvedDates || solvedDates.length === 0) return 0;
+      
+      // Convert to Date objects and sort in descending order
+      const dates = solvedDates.map(date => new Date(date)).sort((a, b) => b - a);
+      
+      let streak = 0;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      let currentDate = new Date(dates[0]);
+      currentDate.setHours(0, 0, 0, 0);
+      
+      // Check if latest solve was today or yesterday
+      const diffToday = Math.floor((today - currentDate) / (1000 * 60 * 60 * 24));
+      
+      if (diffToday === 0) {
+        streak = 1;
+      } else if (diffToday === 1) {
+        streak = 1;
+        currentDate = new Date(today);
+        currentDate.setDate(currentDate.getDate() - 1);
+      } else {
+        return 0; // No recent activity
+      }
+      
+      // Check consecutive days backwards
+      for (let i = 1; i < dates.length; i++) {
+        const prevDate = new Date(dates[i]);
+        prevDate.setHours(0, 0, 0, 0);
+        
+        const diffDays = Math.floor((currentDate - prevDate) / (1000 * 60 * 60 * 24));
+        
+        if (diffDays === 1) {
+          streak++;
+          currentDate = prevDate;
+        } else if (diffDays > 1) {
+          break; // Streak broken
+        }
+      }
+      
+      return streak;
+    }
+
+    // Function to get rank based on problems solved
+    function getRank(totalSolved) {
+      for (const [key, rank] of Object.entries(RANK_SYSTEM)) {
+        if (totalSolved >= rank.min && totalSolved <= rank.max) {
+          return rank;
+        }
+      }
+      return RANK_SYSTEM.NEWBIE;
+    }
+
+    // Function to update topic progress
+    function updateTopicProgress(topicId, solved, total) {
+      const progressElement = document.getElementById(`${topicId}Progress`);
+      const progressBar = document.getElementById(`${topicId}ProgressBar`);
+      const progressPercentage = total > 0 ? (solved / total) * 100 : 0;
+      
+      if (progressElement) {
+        progressElement.textContent = `${solved} out of ${total} problems solved`;
+      }
+      
+      if (progressBar) {
+        progressBar.style.width = `${progressPercentage}%`;
+      }
+      
+      return progressPercentage;
+    }
+
+    // Function to unlock topics based on progress
+    function unlockTopics(totalSolved, arraySolved) {
+      // Unlock Linked List if array requirements met
+      if (arraySolved >= TOPIC_UNLOCK_REQUIREMENTS.LINKED_LIST) {
+        const linkedListCard = document.getElementById('linkedListCard');
+        if (linkedListCard) {
+          linkedListCard.classList.remove('locked');
+          // Update the locked text to Continue button
+          const progressInfo = linkedListCard.querySelector('.progress-info');
+          const lockedSpan = progressInfo.querySelector('.text-muted');
+          if (lockedSpan) {
+            const continueBtn = document.createElement('a');
+            continueBtn.href = '/dsa/linkedlist';
+            continueBtn.className = 'btn-primary-custom btn-sm';
+            continueBtn.textContent = 'Continue';
+            lockedSpan.replaceWith(continueBtn);
+          }
+        }
+      }
+      
+      // Unlock other topics based on total solved
+      const topicsToUnlock = [
+        { id: 'stacks', requirement: TOPIC_UNLOCK_REQUIREMENTS.STACKS },
+        { id: 'queues', requirement: TOPIC_UNLOCK_REQUIREMENTS.QUEUES },
+        { id: 'trees', requirement: TOPIC_UNLOCK_REQUIREMENTS.TREES }
+      ];
+      
+      topicsToUnlock.forEach(topic => {
+        if (totalSolved >= topic.requirement) {
+          const topicCard = document.getElementById(`${topic.id}Card`);
+          if (topicCard) {
+            topicCard.classList.remove('locked');
+            // Update the locked text to Continue button
+            const progressInfo = topicCard.querySelector('.progress-info');
+            const lockedSpan = progressInfo.querySelector('.text-muted');
+            if (lockedSpan) {
+              const continueBtn = document.createElement('a');
+              continueBtn.href = `/dsa/${topic.id}`;
+              continueBtn.className = 'btn-primary-custom btn-sm';
+              continueBtn.textContent = 'Continue';
+              lockedSpan.replaceWith(continueBtn);
+            }
+          }
+        }
+      });
+    }
+
+    // Function to count unlocked topics
+    function countUnlockedTopics(totalSolved, arraySolved) {
+      let count = 1; // Arrays is always unlocked
+      
+      if (arraySolved >= TOPIC_UNLOCK_REQUIREMENTS.LINKED_LIST) count++;
+      if (totalSolved >= TOPIC_UNLOCK_REQUIREMENTS.STACKS) count++;
+      if (totalSolved >= TOPIC_UNLOCK_REQUIREMENTS.QUEUES) count++;
+      if (totalSolved >= TOPIC_UNLOCK_REQUIREMENTS.TREES) count++;
+      
+      return count;
+    }
+
+    async function loadUserData() {
+      try {
+        // Fetch real user data from backend
+        const res = await fetch('/api/user/progress/current'); // This should return current logged-in user data
+        const userData = await res.json();
+
+        // Extract data from response
+        const totalSolved = userData.totalSolved || 0;
+        const arraySolved = userData.arraySolved || 0;
+        const linkedListSolved = userData.linkedListSolved || 0;
+        const stacksSolved = userData.stacksSolved || 0;
+        const queuesSolved = userData.queuesSolved || 0;
+        const treesSolved = userData.treesSolved || 0;
+        const solvedDates = userData.solvedDates || [];
+        const userName = userData.userName || 'User';
+
+        // Update user name
+        document.getElementById('userName').textContent = userName;
+
+        // Calculate streak
+        const streak = calculateStreak(solvedDates);
+        
+        // Update stats
+        document.getElementById('problemsSolved').textContent = totalSolved;
+        document.getElementById('currentStreak').innerHTML = `${streak} <i class="fas fa-fire streak-fire"></i>`;
+        
+        // Update rank
+        const userRank = getRank(totalSolved);
+        document.getElementById('userRank').innerHTML = `${userRank.name} <span class="rank-badge ${userRank.class}">${totalSolved} problems</span>`;
+
+        // Update topic progress
+        updateTopicProgress('array', arraySolved, 30);
+        updateTopicProgress('linkedList', linkedListSolved, 15);
+        updateTopicProgress('stacks', stacksSolved, 12);
+        updateTopicProgress('queues', queuesSolved, 10);
+        updateTopicProgress('trees', treesSolved, 20);
+
+        // Unlock topics based on progress
+        unlockTopics(totalSolved, arraySolved);
+
+        // Count and update unlocked topics
+        const unlockedTopics = countUnlockedTopics(totalSolved, arraySolved);
+        document.getElementById('topicsUnlocked').textContent = unlockedTopics;
+
+      } catch (error) {
+        console.error('Error loading user data:', error);
+        
+        // Fallback to sample data for demonstration
+        const sampleData = {
+          totalSolved: 9,
+          arraySolved: 9,
+          linkedListSolved: 0,
+          stacksSolved: 0,
+          queuesSolved: 0,
+          treesSolved: 0,
+          solvedDates: [
+            '2024-01-15', '2024-01-14', '2024-01-13', '2024-01-12', 
+            '2024-01-11', '2024-01-10', '2024-01-09'
+          ],
+          userName: ''
+        };
+
+        // Use sample data
+        document.getElementById('userName').textContent = sampleData.userName;
+        document.getElementById('problemsSolved').textContent = sampleData.totalSolved;
+        
+        const streak = calculateStreak(sampleData.solvedDates);
+        document.getElementById('currentStreak').innerHTML = `${streak} <i class="fas fa-fire streak-fire"></i>`;
+        
+        const userRank = getRank(sampleData.totalSolved);
+        document.getElementById('userRank').innerHTML = `${userRank.name} <span class="rank-badge ${userRank.class}">${sampleData.totalSolved} problems</span>`;
+
+        updateTopicProgress('array', sampleData.arraySolved, 30);
+        updateTopicProgress('linkedList', sampleData.linkedListSolved, 15);
+        updateTopicProgress('stacks', sampleData.stacksSolved, 12);
+        updateTopicProgress('queues', sampleData.queuesSolved, 10);
+        updateTopicProgress('trees', sampleData.treesSolved, 20);
+
+        unlockTopics(sampleData.totalSolved, sampleData.arraySolved);
+        
+        const unlockedTopics = countUnlockedTopics(sampleData.totalSolved, sampleData.arraySolved);
+        document.getElementById('topicsUnlocked').textContent = unlockedTopics;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      loadUserData();
+    });
+  </script>
+</body>
+</html>

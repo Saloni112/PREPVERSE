@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrepVerse</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="js/main.js">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+   
+  /* Temporary fix - will be overridden by CSS files */
+  body {
+    
+    background: #05243B;
+    color: #F3EDE1;
+    font-family: 'Poppins', sans-serif;
+  }
+  .navbar-brand, .nav-link {
+    color: white !important;
+  }
+
+  /* Custom Button Styles for Login/Signup */
+  .nav-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .btn-login {
+    background: transparent;
+    color: #F3EDE1;
+    border: 2px solid #1070AE;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+  }
+
+  .btn-login:hover {
+    background: rgba(16, 112, 174, 0.1);
+    color: #439FC8;
+    transform: translateY(-2px);
+  }
+
+  .btn-signup {
+    background: #1070AE;
+    color: white;
+    border: 2px solid #1070AE;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+  }
+
+  .btn-signup:hover {
+    background: #439FC8;
+    border-color: #439FC8;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 112, 174, 0.3);
+  }
+  
+   /* Buttons */
+    .btn-primary-custom {
+      background-color: #1070AE;
+      color: #F3EDE1;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 0.75rem 1.75rem;
+      border: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 15px rgba(16, 112, 174, 0.3);
+      letter-spacing: 0.5px;
+    }
+
+    .btn-primary-custom:hover {
+      background-color: #439FC8;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(16, 112, 174, 0.4);
+    }
+
+    .btn-outline-custom {
+      border: 2px solid #1070AE;
+      color: #1070AE;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 0.75rem 1.75rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background-color: transparent;
+    }
+
+    .btn-outline-custom:hover {
+      background-color: #1070AE;
+      color: #F3EDE1;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(16, 112, 174, 0.4);
+    }
+    .search-bar {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 1rem 3rem 1rem 1.5rem;
+    border-radius: 50px;
+    border: 2px solid #064471;
+    background: rgba(6, 68, 113, 0.3);
+    color: #F3EDE1;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: #439FC8;
+    box-shadow: 0 0 0 3px rgba(16, 112, 174, 0.3);
+}
+
+.search-icon {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #439FC8;
+    pointer-events: none;
+}
+
+/* Search Suggestions */
+.search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(5, 36, 59, 0.95);
+    border: 1px solid #064471;
+    border-radius: 12px;
+    margin-top: 8px;
+    padding: 0.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    display: none;
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.search-suggestions.show {
+    display: block;
+    animation: fadeInUp 0.3s ease;
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #F3EDE1;
+}
+
+.suggestion-item:hover {
+    background: rgba(16, 112, 174, 0.2);
+    transform: translateX(5px);
+}
+
+.suggestion-item i {
+    margin-right: 0.75rem;
+    color: #439FC8;
+    width: 20px;
+    text-align: center;
+}
+
+.suggestion-item span {
+    font-weight: 500;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrollbar styling for suggestions */
+.search-suggestions::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-suggestions::-webkit-scrollbar-track {
+    background: rgba(6, 68, 113, 0.3);
+    border-radius: 3px;
+}
+
+.search-suggestions::-webkit-scrollbar-thumb {
+    background: #1070AE;
+    border-radius: 3px;
+}
+
+.search-suggestions::-webkit-scrollbar-thumb:hover {
+    background: #439FC8;
+}
+</style>
+</head>
+<body>
+<!-- navbar code will be added later -->
+    <!-- <%- include('../partials/navbar') %> -->
+   <!-- Loading Animation -->
+  <div id="loading-animation" class="loading-wrapper">
+    <div class="box-wrap">
+      <div class="box one"></div>
+      <div class="box two"></div>
+      <div class="box three"></div>
+      <div class="box four"></div>
+      <div class="box five"></div>
+      <div class="box six"></div>
+    </div>
+  </div>
+  
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <div class="nav-logo">
+          <img src="images/logo.png" alt="PrepVerse Logo" class="logo-image">PrepVerse
+        </div>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+        aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-center" id="navMenu">
+        <ul class="navbar-nav mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link active" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Aptitude</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Programming</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Interviews</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about">About</a>
+          </li>
+        </ul>
+      </div>
+     <div class="nav-buttons">
+        <a href="/login" class="btn-login">Log in</a>
+        <a href="/register" class="btn-signup">Sign up</a>
+      </div>
+    </div>
+  </nav>
+<br><br>
+  <!-- Hero Section -->
+  <header class="header-section">
+    <div class="header-content">
+      <h1><span>Your Placement Journey,</span> Simplified with Confidence!</h1>
+      <p class="lead mb-4">Master aptitude tests, coding challenges, and interview techniques with our comprehensive preparation platform.</p>
+
+     <form class="search-bar mb-4" role="search" id="searchForm">
+    <input type="search" 
+           placeholder="Search for aptitude tests, coding questions, company prep..." 
+           aria-label="Search through placement preparation topics" 
+           id="mainSearch" 
+           autocomplete="off" />
+    <i class="fas fa-search search-icon"></i>
+    
+    <!-- Search Suggestions Dropdown -->
+    <div class="search-suggestions" id="searchSuggestions">
+        <div class="suggestion-item" data-search="aptitude tests">
+            <i class="fas fa-brain"></i>
+            <span>Aptitude Tests</span>
+        </div>
+        <div class="suggestion-item" data-search="coding questions">
+            <i class="fas fa-code"></i>
+            <span>Coding Questions</span>
+        </div>
+        <div class="suggestion-item" data-search="company preparation">
+            <i class="fas fa-building"></i>
+            <span>Company Preparation</span>
+        </div>
+        <div class="suggestion-item" data-search="interview questions">
+            <i class="fas fa-comments"></i>
+            <span>Interview Questions</span>
+        </div>
+        <div class="suggestion-item" data-search="logical reasoning">
+            <i class="fas fa-puzzle-piece"></i>
+            <span>Logical Reasoning</span>
+        </div>
+    </div>
+</form>
+      <div class="d-flex flex-wrap justify-content-center gap-3">
+        <button class="btn btn-primary-custom">Explore Aptitude</button>
+        <button class="btn btn-primary-custom">Start Practicing</button>
+      </div>
+    </div>
+    <div class="brain-illustration">
+      <img src="images/brain2.png"
+           alt="3D glowing brain illustration in blue"
+           class="img-fluid blue-brain" 
+           style="filter: brightness(0) saturate(100%) invert(19%) sepia(96%) saturate(2019%) hue-rotate(195deg) brightness(98%) contrast(101%) drop-shadow(0 0 15px #3a86ff); mix-blend-mode: screen;"
+           onerror="this.style.display='none'" />
+    </div>
+  </header>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Why Choose Us?</h2>
+        <p>Our platform offers everything you need to ace your placement interviews and land your dream job.</p>
+      </div>
+      
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="feature-card" data-delay="0">
+            <div class="feature-icon">
+              <i class="fas fa-laptop-code"></i>
+            </div>
+            <h3>Coding Mastery</h3>
+            <p>Practice 1000+ coding problems with detailed solutions across all difficulty levels and programming languages.</p>
+            <a href="#" class="text-primary text-decoration-none">Explore →</a>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="feature-card" data-delay="200">
+            <div class="feature-icon">
+              <i class="fas fa-building"></i>
+            </div>
+            <h3>Company Specific</h3>
+            <p>Tailored preparation guides for top companies like Amazon, Google, Microsoft, TCS, Infosys and more.</p>
+            <a href="#" class="text-primary text-decoration-none">Explore →</a>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="feature-card" data-delay="400">
+            <div class="feature-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h3>Aptitude Tests</h3>
+            <p>Comprehensive collection of quantitative, logical reasoning, and verbal ability questions with explanations.</p>
+            <a href="#" class="text-primary text-decoration-none">Explore →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-section py-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4 mb-4 mb-lg-0">
+          <div class="footer-logo d-flex align-items-center mb-3">
+            <img src="images/logo.png" alt="PrepVerse Logo" class="logo-image me-2">
+            <h3 class="text-primary-light mb-0">PrepVerse</h3>
+          </div>
+          <p class="text-muted">Your placement journey simplified with confidence. Master aptitude tests, coding challenges, and interview techniques with our comprehensive preparation platform.</p>
+          <div class="social-icons mt-4">
+            <a href="#" class="text-primary-light me-3"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-primary-light me-3"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-primary-light me-3"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="text-primary-light"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-md-4 col-lg-2 mb-4 mb-md-0">
+          <h5 class="text-primary-light mb-4">Quick Links</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Home</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Aptitude</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Programming</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Companies</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Resources</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-md-4 col-lg-2 mb-4 mb-md-0">
+          <h5 class="text-primary-light mb-4">Resources</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Blog</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">FAQs</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Help Center</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Tutorials</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none hover-primary">Contact Us</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-md-4 col-lg-4">
+          <h5 class="text-primary-light mb-4">Newsletter</h5>
+          <p class="text-muted">Subscribe to our newsletter for the latest updates and resources.</p>
+          <form class="mt-4">
+            <div class="input-group mb-3">
+              <input type="email" class="form-control bg-darker border-secondary" placeholder="Your Email" aria-label="Your Email">
+              <button class="btn btn-primary-custom" type="submit">Subscribe</button>
+            </div>
+          </form>
+          <p class="small text-muted mt-3">We'll never share your email with anyone else.</p>
+        </div>
+      </div>
+      
+      <hr class="my-4 border-secondary">
+      
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start">
+          <p class="small text-muted mb-0">© 2023 PrepVerse. All rights reserved.</p>
+        </div>
+        <div class="col-md-6 text-center text-md-end">
+          <ul class="list-inline small mb-0">
+            <li class="list-inline-item"><a href="#" class="text-muted text-decoration-none hover-primary">Privacy Policy</a></li>
+            <li class="list-inline-item mx-2">·</li>
+            <li class="list-inline-item"><a href="#" class="text-muted text-decoration-none hover-primary">Terms of Service</a></li>
+            <li class="list-inline-item mx-2">·</li>
+            <li class="list-inline-item"><a href="#" class="text-muted text-decoration-none hover-primary">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('mainSearch');
+    const searchSuggestions = document.getElementById('searchSuggestions');
+    const suggestionItems = document.querySelectorAll('.suggestion-item');
+
+    // Show suggestions when input is focused
+    searchInput.addEventListener('focus', function() {
+        searchSuggestions.classList.add('show');
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!searchForm.contains(e.target)) {
+            searchSuggestions.classList.remove('show');
+        }
+    });
+
+    // Handle suggestion click
+    suggestionItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const searchText = this.getAttribute('data-search');
+            searchInput.value = searchText;
+            searchSuggestions.classList.remove('show');
+            searchInput.focus();
+        });
+    });
+
+    // Handle Enter key press
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            
+            // Check if input is empty
+            if (searchInput.value.trim() === '') {
+                // Show error message or highlight the field
+                searchInput.style.borderColor = '#dc3545';
+                setTimeout(() => {
+                    searchInput.style.borderColor = '#064471';
+                }, 2000);
+                return;
+            }
+
+            // Hide suggestions
+            searchSuggestions.classList.remove('show');
+            
+            // Show loading state
+            const originalIcon = document.querySelector('.search-icon');
+            originalIcon.style.display = 'none';
+            
+            const loadingIcon = document.createElement('i');
+            loadingIcon.className = 'fas fa-spinner fa-spin search-icon';
+            loadingIcon.style.position = 'absolute';
+            loadingIcon.style.right = '1.5rem';
+            loadingIcon.style.top = '50%';
+            loadingIcon.style.transform = 'translateY(-50%)';
+            loadingIcon.style.color = '#439FC8';
+            searchForm.appendChild(loadingIcon);
+
+            // Simulate search processing
+            setTimeout(() => {
+                // Remove loading icon
+                loadingIcon.remove();
+                originalIcon.style.display = 'block';
+                
+                // Redirect to login page
+                window.location.href = '/login';
+            }, 1000);
+        }
+    });
+
+    // Handle input changes for dynamic filtering (optional enhancement)
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        
+        suggestionItems.forEach(item => {
+            const text = item.getAttribute('data-search').toLowerCase();
+            if (text.includes(searchTerm) || searchTerm === '') {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+        
+        // Show suggestions if there are matches
+        const hasVisibleItems = Array.from(suggestionItems).some(item => 
+            item.style.display !== 'none'
+        );
+        
+        if (hasVisibleItems && this.value.length > 0) {
+            searchSuggestions.classList.add('show');
+        } else if (this.value.length === 0) {
+            searchSuggestions.classList.add('show');
+        } else {
+            searchSuggestions.classList.remove('show');
+        }
+    });
+
+    // Add arrow key navigation for suggestions
+    let selectedIndex = -1;
+
+    searchInput.addEventListener('keydown', function(e) {
+        const visibleItems = Array.from(suggestionItems).filter(item => 
+            item.style.display !== 'none'
+        );
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            selectedIndex = Math.min(selectedIndex + 1, visibleItems.length - 1);
+            updateSelection(visibleItems);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            selectedIndex = Math.max(selectedIndex - 1, -1);
+            updateSelection(visibleItems);
+        } else if (e.key === 'Enter' && selectedIndex >= 0) {
+            e.preventDefault();
+            visibleItems[selectedIndex].click();
+        }
+    });
+
+    function updateSelection(visibleItems) {
+        suggestionItems.forEach(item => item.classList.remove('selected'));
+        if (selectedIndex >= 0 && visibleItems[selectedIndex]) {
+            visibleItems[selectedIndex].classList.add('selected');
+            visibleItems[selectedIndex].style.backgroundColor = 'rgba(16, 112, 174, 0.3)';
+        }
+    }
+});
+  </script>
+</body>
+</html>

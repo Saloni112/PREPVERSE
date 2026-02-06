@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrepVerse- Faculty Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+       :root {
+            --primary: #1070AE;
+            --primary-light: #439FC8;
+            --primary-dark: #05243B;
+            --secondary: #064471;
+            --light: #F3EDE1;
+            --dark: #05243B;
+            --darker: #041A2E;
+            --gray: #7e7e7e;
+            --success: #28a745;
+        }
+
+        body {
+            background: #05243B;
+            color: #F3EDE1;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+
+        /* Buttons */
+        .btn-primary-custom {
+            background-color: var(--primary);
+            color: var(--light);
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 0.75rem 1.75rem;
+            border: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(16, 112, 174, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 112, 174, 0.4);
+        }
+
+        .btn-outline-custom {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 0.75rem 1.75rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: transparent;
+        }
+
+        .btn-outline-custom:hover {
+            background-color: var(--primary);
+            color: var(--light);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 112, 174, 0.4);
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 0.8rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 40px;
+            margin-right: 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.6) !important; /* Faded items */
+            text-decoration: none;
+            padding: 0.5rem 0;
+            position: relative;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: rgba(255, 255, 255, 0.9) !important; /* More visible on hover */
+        }
+
+        .nav-link.active {
+            color: white !important; /* Fully visible when active */
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-light);
+            border-radius: 3px 3px 0 0;
+        }
+
+        /* User Profile Styling */
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-avatar img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-light);
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        .user-email {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .user-department {
+            font-size: 0.75rem;
+            color: var(--primary-light);
+            font-style: italic;
+        }
+
+        .logout-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--primary-light);
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .welcome-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .welcome-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+        }
+
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            background-color: var(--darker);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            color: var(--primary-light);
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .card-desc {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Question Management Section */
+        .question-section {
+            background-color: var(--darker);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--primary);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            background-color: rgba(16, 112, 174, 0.1);
+        }
+
+        .upload-area.active {
+            background-color: rgba(16, 112, 174, 0.2);
+            border-color: var(--primary-light);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary-light);
+            margin-bottom: 1rem;
+        }
+
+        .upload-text {
+            margin-bottom: 1rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .csv-preview {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .preview-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .preview-table th, .preview-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .preview-table th {
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+
+        .preview-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .status-success {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+
+        .status-error {
+            background-color: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+
+        /* Question List Section */
+        .question-list {
+            background-color: var(--darker);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .question-item {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .question-item:last-child {
+            border-bottom: none;
+        }
+
+        .question-text {
+            margin-bottom: 0.5rem;
+        }
+
+        .question-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        /* Footer */
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.5rem 0;
+            border-top: 1px solid #2c4763;
+            margin-top: 2rem;
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-light);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .top-nav {
+                padding: 0.8rem 1rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-menu {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .user-actions {
+                width: 100%;
+                justify-content: center;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .user-profile {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .footer-links {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <img src="images/logo.png" alt="PrepVerseLogo">
+                <span>PrepVerse</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li>
+                    <a href="#" class="nav-link active">Dashboard</a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link">Question Bank</a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link">Student Progress</a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link">Analytics</a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link">Settings</a>
+                </li>
+            </ul>
+            
+            <div class="user-actions" id="userActions">
+                <% if (user) { %>
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <img src="https://placehold.co/40x40/064471/F3EDE1?text=<%= user.name ? user.name.charAt(0).toUpperCase() : 'F' %>" alt="Faculty Profile">
+                        </div>
+                        <div class="user-info">
+                            <div class="user-name"><%= user.name || 'Faculty' %></div>
+                        </div>
+                    </div>
+                    <a href="/logout" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                <% } else { %>
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <img src="https://placehold.co/40x40/064471/F3EDE1?text=F" alt="Faculty Profile">
+                        </div>
+                        <div class="user-info">
+                            <div class="user-name">Guest Faculty</div>
+                        </div>
+                    </div>
+                    <a href="/login" class="logout-btn">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Welcome Card -->
+        <div class="welcome-card">
+            <% if (user) { %>
+                <h2 class="welcome-title">Welcome, <%= user.name %>! 👨‍🏫</h2>
+                <% if (user.department) { %>
+                    <p class="welcome-subtitle"><%= user.department %> Department | Manage your question bank and track student progress from your faculty dashboard.</p>
+                <% } else { %>
+                    <p class="welcome-subtitle">Manage your question bank and track student progress from your faculty dashboard.</p>
+                <% } %>
+            <% } else { %>
+                <h2 class="welcome-title">Welcome to Faculty Dashboard! 👨‍🏫</h2>
+                <p class="welcome-subtitle">Please login to manage questions and track student progress.</p>
+            <% } %>
+            <button class="btn-primary-custom">View Student Analytics</button>
+        </div>
+
+        <!-- Dashboard Cards -->
+        <div class="dashboard-cards">
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3 class="card-title">Question Bank</h3>
+                <p class="card-desc">Manage your collection of aptitude questions</p>
+                <button class="btn-primary-custom">View Questions</button>
+            </div>
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-file-csv"></i>
+                </div>
+                <h3 class="card-title">CSV Upload</h3>
+                <p class="card-desc">Add multiple questions using CSV format</p>
+                <button class="btn-primary-custom" id="uploadCsvBtn">Upload CSV</button>
+            </div>
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="card-title">Student Progress</h3>
+                <p class="card-desc">Track student performance and analytics</p>
+                <button class="btn-primary-custom">View Reports</button>
+            </div>
+        </div>
+
+        <!-- Question Upload Section -->
+        <div class="question-section">
+            <h3 class="section-title">Upload Questions via CSV</h3>
+            
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">
+                    <i class="fas fa-file-upload"></i>
+                </div>
+                <p class="upload-text">Drag & drop your CSV file here or click to browse</p>
+                <p class="text-muted">CSV format: Question, Option1, Option2, Option3, Option4, CorrectAnswer, Category, Difficulty</p>
+                <input type="file" id="csvFile" class="file-input" accept=".csv">
+                <button class="btn-outline-custom">Select CSV File</button>
+            </div>
+            
+            <div class="csv-preview" id="csvPreview" style="display: none;">
+                <h5>CSV Preview</h5>
+                <table class="preview-table">
+                    <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>Options</th>
+                            <th>Correct Answer</th>
+                            <th>Category</th>
+                            <th>Difficulty</th>
+                        </tr>
+                    </thead>
+                    <tbody id="previewTableBody">
+                        <!-- Preview rows will be added here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="status-message" id="statusMessage"></div>
+            
+            <div class="d-flex justify-content-end mt-3">
+                <button class="btn-primary-custom" id="submitBtn" style="display: none;">Upload to Database</button>
+            </div>
+        </div>
+
+        <!-- Recent Questions Section -->
+        <div class="question-list">
+            <h3 class="section-title">Recently Added Questions</h3>
+            
+            <div class="question-item">
+                <div class="question-text">
+                    What is the time complexity of binary search algorithm?
+                </div>
+                <div class="question-meta">
+                    <span>Category: Algorithms</span>
+                    <span>Difficulty: Medium</span>
+                    <span>Added: 2 hours ago</span>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <div class="question-text">
+                    If a train travels at 60 km/h, how long will it take to cover 240 km?
+                </div>
+                <div class="question-meta">
+                    <span>Category: Quantitative</span>
+                    <span>Difficulty: Easy</span>
+                    <span>Added: 5 hours ago</span>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <div class="question-text">
+                    Which data structure follows LIFO principle?
+                </div>
+                <div class="question-meta">
+                    <span>Category: Data Structures</span>
+                    <span>Difficulty: Easy</span>
+                    <span>Added: 1 day ago</span>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-center mt-3">
+                <button class="btn-outline-custom">View All Questions</button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="copyright">
+                © 2023 WorkWave. All rights reserved.
+            </div>
+            <div class="footer-links">
+                <a href="#" class="footer-link">About</a>
+                <a href="#" class="footer-link">Contact</a>
+                <a href="#" class="footer-link">Help</a>
+                <a href="#" class="footer-link">Terms</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // DOM Elements
+        const uploadArea = document.getElementById('uploadArea');
+        const csvFile = document.getElementById('csvFile');
+        const csvPreview = document.getElementById('csvPreview');
+        const previewTableBody = document.getElementById('previewTableBody');
+        const statusMessage = document.getElementById('statusMessage');
+        const submitBtn = document.getElementById('submitBtn');
+        const uploadCsvBtn = document.getElementById('uploadCsvBtn');
+
+        // Event Listeners
+        uploadArea.addEventListener('click', () => {
+            csvFile.click();
+        });
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('active');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('active');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('active');
+            
+            if (e.dataTransfer.files.length) {
+                csvFile.files = e.dataTransfer.files;
+                handleFileUpload(csvFile.files[0]);
+            }
+        });
+
+        csvFile.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleFileUpload(e.target.files[0]);
+            }
+        });
+
+        uploadCsvBtn.addEventListener('click', () => {
+            csvFile.click();
+        });
+
+        submitBtn.addEventListener('click', uploadToDatabase);
+
+        // Functions
+        function handleFileUpload(file) {
+            if (file.type !== 'text/csv' && !file.name.endsWith('.csv')) {
+                showStatus('Please select a valid CSV file.', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const csvText = e.target.result;
+                    const rows = parseCSV(csvText);
+                    
+                    if (rows.length > 0) {
+                        displayPreview(rows);
+                        csvPreview.style.display = 'block';
+                        submitBtn.style.display = 'block';
+                        showStatus(`CSV file loaded successfully. ${rows.length} questions found.`, 'success');
+                    } else {
+                        showStatus('No valid data found in CSV file.', 'error');
+                    }
+                } catch (error) {
+                    showStatus('Error parsing CSV file: ' + error.message, 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function parseCSV(csvText) {
+            const rows = [];
+            const lines = csvText.split('\n');
+            
+            // Skip header row if exists
+            const startIndex = lines[0].toLowerCase().includes('question') ? 1 : 0;
+            
+            for (let i = startIndex; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+                
+                // Simple CSV parsing (for demonstration)
+                const columns = line.split(',').map(col => col.trim());
+                
+                if (columns.length >= 7) {
+                    rows.push({
+                        question: columns[0],
+                        options: [columns[1], columns[2], columns[3], columns[4]],
+                        correctAnswer: columns[5],
+                        category: columns[6],
+                        difficulty: columns[7] || 'Medium'
+                    });
+                }
+            }
+            
+            return rows;
+        }
+
+        function displayPreview(rows) {
+            previewTableBody.innerHTML = '';
+            
+            // Show only first 5 rows in preview
+            const previewRows = rows.slice(0, 5);
+            
+            previewRows.forEach(row => {
+                const tr = document.createElement('tr');
+                
+                tr.innerHTML = `
+                    <td>${row.question.substring(0, 50)}${row.question.length > 50 ? '...' : ''}</td>
+                    <td>${row.options.join(', ')}</td>
+                    <td>${row.correctAnswer}</td>
+                    <td>${row.category}</td>
+                    <td>${row.difficulty}</td>
+                `;
+                
+                previewTableBody.appendChild(tr);
+            });
+            
+            if (rows.length > 5) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td colspan="5" class="text-center">... and ${rows.length - 5} more rows</td>`;
+                previewTableBody.appendChild(tr);
+            }
+        }
+
+        function uploadToDatabase() {
+            // Show loading state
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+            submitBtn.disabled = true;
+            
+            // Simulate API call to backend
+            setTimeout(() => {
+                // In a real application, this would be an actual API call
+                // For demonstration, we'll simulate a successful upload
+                
+                showStatus('Questions successfully uploaded to the database!', 'success');
+                
+                // Reset form
+                submitBtn.innerHTML = 'Upload to Database';
+                submitBtn.disabled = false;
+                submitBtn.style.display = 'none';
+                csvPreview.style.display = 'none';
+                csvFile.value = '';
+                
+                // In a real application, you would refresh the question list here
+            }, 2000);
+        }
+
+        function showStatus(message, type) {
+            statusMessage.textContent = message;
+            statusMessage.className = 'status-message';
+            statusMessage.classList.add(`status-${type}`);
+            statusMessage.style.display = 'block';
+            
+            // Auto-hide success messages after 5 seconds
+            if (type === 'success') {
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>

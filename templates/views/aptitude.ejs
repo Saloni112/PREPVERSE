@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Prep - Aptitude Types</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+       :root {
+            --primary: #1070AE;
+            --primary-light: #439FC8;
+            --primary-dark: #05243B;
+            --secondary: #064471;
+            --light: #F3EDE1;
+            --dark: #05243B;
+            --darker: #041A2E;
+            --gray: #7e7e7e;
+            --success: #28a745;
+        }
+
+        body {
+            background: #05243B;
+            color: #F3EDE1;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar Styling */
+        .top-nav {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 0.8rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 40px;
+            margin-right: 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.6) !important;
+            text-decoration: none;
+            padding: 0.5rem 0;
+            position: relative;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .nav-link.active {
+            color: white !important;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-light);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+        }
+
+        .logout-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--primary-light);
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, var(--secondary), var(--primary-dark));
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .aptitude-heading {
+            color: var(--light);
+            margin: 2rem 0;
+        }
+        
+        .aptitude-card {
+            background: linear-gradient(135deg, var(--secondary), var(--primary-dark));
+            border: 1px solid var(--primary-light);
+            border-radius: 12px;
+            color: var(--light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .aptitude-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .aptitude-card .card-body {
+            padding: 1.5rem;
+        }
+        
+        .aptitude-card .icon {
+            display: inline-block;
+            padding: 15px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-light);
+            border-color: var(--primary-light);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-light);
+            border-color: var(--primary-light);
+            color: var(--dark);
+        }
+        
+        .text-theme-secondary {
+            color: var(--primary-light) !important;
+        }
+        
+    </style>
+</head> 
+<body></body> 
+<!-- Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <img src="images/logo.png" alt="PrepVerse Logo">
+                PrepVerse
+            </a>
+            <ul class="nav-menu" id="navMenu" style="margin-right: 150px;">
+                <li><a href="/aptitude" class="nav-link active">Home</a></li>
+                <li><a href="/quant" class="nav-link">Quant</a></li>
+                <li><a href="/reasoning" class="nav-link">Reasoning</a></li>
+                <li><a href="/verbal" class="nav-link">Verbal</a></li>
+                <li><a href="/sdashboard" class="nav-link "><i class="fas fa-home"></i> Dashboard</a></li>
+
+            </ul>
+            
+            <div class="user-actions" id="userActions">
+                <div class="user-profile">
+                    
+             
+        </div>
+    </nav>
+<br>
+
+    <div class="header-subtitle text-center mb-4 mt-3">
+        <span class="fw-semibold">
+            Unlock your potential. Master numbers. Ace every challenge!
+            <i class="fa-solid fa-star ms-2 text-warning animate__animated animate__pulse animate__infinite" aria-hidden="true"></i>
+        </span>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-bg min-vh-100 py-5">
+        <div class="container">
+            <div class="info-box">
+                <h4 class="fw-bold mb-2">What is Aptitude?</h4>
+                <p style="font-size:1.05rem;">
+                    Aptitude refers to a person's natural ability to learn, understand, and perform specific tasks or skills. 
+                    Aptitude tests are commonly used to assess logical reasoning, problem-solving, numerical ability, and verbal skills. 
+                    These tests help identify strengths and areas for improvement, making them valuable for academic, career, and personal development.
+                </p>
+            </div>
+            
+            <h2 class="aptitude-heading text-center fw-bold py-3">
+                <i class="fa-solid fa-compass-drafting me-2 text-primary" aria-hidden="true"></i>
+                Ready to Start Your Aptitude Journey?
+                <br> <small class="text-theme-secondary fst-italic fw-medium">If yes, select a skill area below.</small>
+            </h2>
+
+            <div class="row g-4">
+                <!-- Card 1 -->
+                <div class="col-md-4">
+                    <div class="card aptitude-card h-100">
+                        <div class="card-body">
+                            <div class="icon mb-3 text-primary">
+                                <i class="fa-solid fa-chart-column fa-2x" aria-hidden="true"></i>
+                            </div>
+                            <h5 class="card-title">Quantitative Aptitude</h5>
+                            <p class="card-text">
+                                Make a wise and considered outcome when you conclude the given question.
+                            </p>
+                            <a href="/quant" class="btn btn-outline-primary btn-sm mt-2">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="col-md-4">
+                    <div class="card aptitude-card h-100">
+                        <div class="card-body">
+                            <div class="icon mb-3 text-primary">
+                                <i class="fa-solid fa-gears fa-2x" aria-hidden="true"></i>
+                            </div>
+                            <h5 class="card-title">Logical Reasoning</h5>
+                            <p class="card-text">
+                                Unconscious foundation is a short sentence describing what you will learn.
+                            </p>
+                            <a href="/reasoning" class="btn btn-outline-primary btn-sm mt-2">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="col-md-4">
+                    <div class="card aptitude-card h-100">
+                        <div class="card-body">
+                            <div class="icon mb-3 text-primary">
+                                <i class="fa-solid fa-comments fa-2x" aria-hidden="true"></i>
+                            </div>
+                            <h5 class="card-title">Verbal Ability</h5>
+                            <p class="card-text">
+                                Communication skills and the ability to comprehend text and context.
+                            </p>
+                            <a href="/verbal" class="btn btn-outline-primary btn-sm mt-2">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Navbar Active Fix -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            
+            navLinks.forEach(link => {
+                // Remove active class from all links
+                link.classList.remove('active');
+                
+                // Add active class to current page link
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

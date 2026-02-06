@@ -1,0 +1,9 @@
+// const mongoose = require('mongoose');
+
+// mongoose.connect("mongodb://localhost:27017/WorkwaveRegister")
+//   .then(() => {
+//     console.log("Connection successful");
+//   })
+//   .catch((err) => {
+//     console.log("No connection", err);
+//   });
